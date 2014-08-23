@@ -1,4 +1,4 @@
-<?php namespace Addon\FieldType\Relationship;
+<?php namespace Streams\Addon\FieldType\Relationship;
 
 use Streams\Core\Addon\FieldTypeAbstract;
 use Streams\Core\Stream\Model\StreamModel;
