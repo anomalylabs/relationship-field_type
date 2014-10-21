@@ -1,15 +1,8 @@
-<?php namespace Anomaly\Streams\FieldType\Relationship;
+<?php namespace Anomaly\Streams\Addon\FieldType\Relationship;
 
-use Streams\Core\Addon\FieldTypeAbstract;
-use Streams\Core\Stream\Model\StreamModel;
+use Anomaly\Streams\Platform\Addon\FieldType\FieldTypeAddon;
 
-/**
- * Class Relationship
- *
- * @package Pyro\FieldType
- * @author  PyroCMS - Ryan Thompson
- */
-class RelationshipFieldType extends FieldTypeAbstract
+class RelationshipFieldType extends FieldTypeAddon
 {
     /**
      * Field type slug
