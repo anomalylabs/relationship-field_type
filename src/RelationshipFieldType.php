@@ -1,6 +1,6 @@
 <?php namespace Anomaly\Streams\Addon\FieldType\Relationship;
 
-use Anomaly\Streams\Platform\Addon\FieldType\FieldTypeAddon;
+use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 
 /**
@@ -11,7 +11,7 @@ use Anomaly\Streams\Platform\Model\EloquentModel;
  * @author        Ryan Thompson <ryan@anomaly.is>
  * @package       Anomaly\Streams\Addon\FieldType\Relationship
  */
-class RelationshipFieldType extends FieldTypeAddon
+class RelationshipFieldType extends FieldType
 {
 
     public function relation()
