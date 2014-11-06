@@ -26,7 +26,7 @@ class RelationshipFieldType extends FieldType
      * @param $value
      * @return mixed
      */
-    public function onSet($value)
+    protected function onSet($value)
     {
         if ($value instanceof EloquentModel) {
 
@@ -43,7 +43,7 @@ class RelationshipFieldType extends FieldType
      *
      * @param $model
      */
-    public function onAfterSet($model)
+    protected function onAfterSet($model)
     {
         if ($id = $model->{parent::getColumnName()}) {
 
