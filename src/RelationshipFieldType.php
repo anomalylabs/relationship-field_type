@@ -16,7 +16,7 @@ class RelationshipFieldType extends FieldType
 
     public function relation()
     {
-        return null;
+        return $this->hasOne('Foo'); // TODO: Flesh this out.
     }
 
     /**
