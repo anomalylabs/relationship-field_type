@@ -125,4 +125,14 @@ class RelationshipFieldType extends FieldType
 
         return app()->make($model);
     }
+
+    /**
+     * Get the database column name.
+     *
+     * @return null|string
+     */
+    public function getColumnName()
+    {
+        return parent::getColumnName() . '_id';
+    }
 }
