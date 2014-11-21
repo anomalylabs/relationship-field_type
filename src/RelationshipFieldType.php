@@ -1,6 +1,8 @@
 <?php namespace Anomaly\Streams\Addon\FieldType\Relationship;
 
+use Anomaly\Streams\Platform\Addon\FieldType\Contract\RelationFieldTypeInterface;
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
+use Anomaly\Streams\Platform\Entry\EntryModel;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 
 /**
@@ -11,7 +13,7 @@ use Anomaly\Streams\Platform\Model\EloquentModel;
  * @author        Ryan Thompson <ryan@anomaly.is>
  * @package       Anomaly\Streams\Addon\FieldType\Relationship
  */
-class RelationshipFieldType extends FieldType
+class RelationshipFieldType extends FieldType implements RelationFieldTypeInterface
 {
 
     /**
@@ -31,11 +33,12 @@ class RelationshipFieldType extends FieldType
     /**
      * Get the relation.
      *
-     * @return array
+     * @param EntryModel $model
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne|mixed|null
      */
-    public function getRelation()
+    public function getRelation(EntryModel $model)
     {
-        return $this->hasOne($this->getConfig('related'));
+        return $model->hasOne($this->getConfig('related'));
     }
 
     /**
