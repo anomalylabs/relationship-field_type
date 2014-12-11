@@ -38,7 +38,7 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
      */
     public function getRelation(EntryModel $model)
     {
-        return $model->hasOne($this->getConfig('related'), 'id');
+        return $model->hasOne($this->pullConfig('related'), 'id');
     }
 
     /**
@@ -94,7 +94,7 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
 
             $value = $entry->getKey();
 
-            if ($title = $this->getConfig('title')) {
+            if ($title = $this->pullConfig('title')) {
 
                 $title = $entry->{$title};
             }
@@ -119,7 +119,7 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
      */
     protected function getRelatedModel()
     {
-        $model = $this->getConfig('related');
+        $model = $this->pullConfig('related');
 
         if (!$model) {
 
