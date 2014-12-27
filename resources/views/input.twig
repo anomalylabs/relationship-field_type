@@ -1,0 +1,9 @@
+<select name="{{ name }}" class="{{ class }} selectize">
+
+    {% for option in options %}
+
+        <option value="{{ option.value }}" {{ option.selected ? 'selected' }}>{{ option.title }}</option>
+
+    {% endfor %}
+
+</select>
