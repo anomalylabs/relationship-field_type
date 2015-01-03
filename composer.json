@@ -1,5 +1,5 @@
 {
-    "name": "anomaly/relationship-field-type",
+    "name": "anomaly/relationship-field_type",
     "type": "streams-addon",
     "description": "Relationship field type.",
     "authors": [
