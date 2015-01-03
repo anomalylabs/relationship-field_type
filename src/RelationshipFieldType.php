@@ -28,7 +28,7 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
      *
      * @var string
      */
-    protected $inputView = 'field_type.relationship::input';
+    protected $inputView = 'anomaly.field_type.relationship::input';
 
     /**
      * Get the relation.
