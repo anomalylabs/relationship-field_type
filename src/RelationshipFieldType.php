@@ -1,4 +1,4 @@
-<?php namespace Anomaly\Streams\Addon\FieldType\Relationship;
+<?php namespace Anomaly\RelationshipFieldType;
 
 use Anomaly\Streams\Platform\Addon\FieldType\Contract\RelationFieldTypeInterface;
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
