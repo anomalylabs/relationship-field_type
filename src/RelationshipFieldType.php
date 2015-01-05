@@ -17,13 +17,6 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
 {
 
     /**
-     * The input class.
-     *
-     * @var null
-     */
-    protected $class = null;
-
-    /**
      * The input view.
      *
      * @var string
@@ -38,21 +31,7 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
      */
     public function getRelation(EntryModel $model)
     {
-        return $model->hasOne($this->pullConfig('related'), 'id');
-    }
-
-    /**
-     * Get view data for the input.
-     *
-     * @return array
-     */
-    public function getInputData()
-    {
-        $data = parent::getInputData();
-
-        $data['options'] = $this->getOptions();
-
-        return $data;
+        return $model->hasOne(array_get($this->config, 'related'), 'id');
     }
 
     /**
@@ -94,13 +73,11 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
 
             $value = $entry->getKey();
 
-            if ($title = $this->pullConfig('title')) {
-
+            if ($title = array_get($this->config, 'title')) {
                 $title = $entry->{$title};
             }
 
             if (!$title) {
-
                 $title = $entry->getTitle();
             }
 
@@ -119,7 +96,7 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
      */
     protected function getRelatedModel()
     {
-        $model = $this->pullConfig('related');
+        $model = array_get($this->config, 'related');
 
         if (!$model) {
 

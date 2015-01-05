@@ -1,6 +1,6 @@
-<select name="{{ name }}" class="{{ class }} selectize">
+<select name="{{ field_type.getFieldName() }}" class="form-control">
 
-    {% for option in options %}
+    {% for option in field_type.options %}
 
         <option value="{{ option.value }}" {{ option.selected ? 'selected' }}>{{ option.title }}</option>
 
