@@ -39,7 +39,7 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
      *
      * @return array
      */
-    protected function getOptions()
+    public function getOptions()
     {
         $options = [];
 
@@ -63,7 +63,6 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
         $model = $this->getRelatedModel();
 
         if (!$model instanceof EloquentModel) {
-
             return [];
         }
 
