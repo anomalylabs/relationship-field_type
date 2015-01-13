@@ -2,7 +2,12 @@
     "name": "anomaly/relationship-field_type",
     "type": "streams-addon",
     "description": "A relationship dropdown field type.",
-    "keywords": ["streams-addon", "relationship", "pyrocms", "laravel"],
+    "keywords": [
+        "streams-addon",
+        "relationship",
+        "pyrocms",
+        "laravel"
+    ],
     "homepage": "http://anomaly.is/",
     "license": "MIT",
     "authors": [
