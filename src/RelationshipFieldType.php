@@ -31,7 +31,7 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
      */
     public function getRelation(EntryModel $model)
     {
-        return $model->hasOne(array_get($this->config, 'related'), 'id');
+        return $model->hasOne(array_get($this->config, 'related'), 'id', $this->getColumnName());
     }
 
     /**
