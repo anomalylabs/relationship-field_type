@@ -11,7 +11,7 @@ use Anomaly\Streams\Platform\Model\EloquentModel;
  * @link          http://anomaly.is/streams-platform
  * @author        AnomalyLabs, Inc. <hello@anomaly.is>
  * @author        Ryan Thompson <ryan@anomaly.is>
- * @package       Anomaly\Streams\Addon\FieldType\Relationship
+ * @package       Anomaly\RelationshipFieldType
  */
 class RelationshipFieldType extends FieldType implements RelationFieldTypeInterface
 {
@@ -98,7 +98,6 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
         $model = array_get($this->config, 'related');
 
         if (!$model) {
-
             return null;
         }
 

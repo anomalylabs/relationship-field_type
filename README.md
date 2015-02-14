@@ -1,3 +1,21 @@
-#Relationship Field Type
+# Relationship Field Type
 
-A relationship dropdown field type.
+*anomaly.field_type.relationship*
+
+#### An entry relation field type.
+
+The relationship field type provides an HTML select input with options from a related Stream or model.
+
+## Configuration
+
+- `related` - the class string of the related model
+- `title` - the related column to use as the option title 
+
+The title option will default to the model's title column.  
+
+#### Example
+
+	config => [
+	    'related' => 'Anomaly\UsersModule\User\UserModel',
+	    'title' => 'username'
+	]
