@@ -1,7 +1,7 @@
 {
     "name": "anomaly/relationship-field_type",
     "type": "streams-addon",
-    "description": "A relationship dropdown field type.",
+    "description": "An entry relation field type.",
     "keywords": [
         "streams-addon",
         "relationship",
