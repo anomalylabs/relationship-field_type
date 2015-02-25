@@ -24,6 +24,13 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
     protected $inputView = 'anomaly.field_type.relationship::input';
 
     /**
+     * The options handler.
+     *
+     * @var string
+     */
+    protected $options = 'Anomaly\RelationshipFieldType\RelationshipFieldTypeOptions@handle';
+
+    /**
      * Get the relation.
      *
      * @param EntryModel $model
@@ -41,67 +48,17 @@ class RelationshipFieldType extends FieldType implements RelationFieldTypeInterf
      */
     public function getOptions()
     {
-        $options = [];
-
-        foreach ($this->getModelOptions() as $option) {
-
-            $option['selected'] = ($option['value'] == $this->getValue());
-
-            $options[] = $option;
-        }
-
-        return $options;
-    }
-
-    /**
-     * Get options from the model.
-     *
-     * @return array
-     */
-    protected function getModelOptions()
-    {
-        $model = $this->getRelatedModel();
-
-        if (!$model instanceof EloquentModel) {
-            return [];
-        }
-
-        $options = [];
-
-        foreach ($model->all() as $entry) {
-
-            $value = $entry->getKey();
-
-            if ($title = array_get($this->config, 'title')) {
-                $title = $entry->{$title};
-            }
-
-            if (!$title) {
-                $title = $entry->getTitle();
-            }
-
-            $entry = $entry->toArray();
-
-            $options[] = compact('value', 'title', 'entry');
-        }
-
-        return $options;
+        return app()->call(array_get($this->config, 'handler', $this->options), ['fieldType' => $this]);
     }
 
     /**
      * Get the related model.
      *
-     * @return null
+     * @return EloquentModel
      */
-    protected function getRelatedModel()
+    public function getRelatedModel()
     {
-        $model = array_get($this->config, 'related');
-
-        if (!$model) {
-            return null;
-        }
-
-        return app()->make($model);
+        return app()->make(array_get($this->config, 'related'));
     }
 
     /**
