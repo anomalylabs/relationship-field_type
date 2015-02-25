@@ -2,7 +2,6 @@
         name="{{ field_type.getInputName() }}"
         class="form-control select2"
         {{ field_type.disabled ? 'disabled' }}
-        {{ field_type.readonly ? 'readonly' }}
         >
 
     {% for value, title in field_type.options %}
