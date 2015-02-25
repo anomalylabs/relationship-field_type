@@ -8,10 +8,11 @@ The relationship field type provides an HTML select input with options from a re
 
 ## Configuration
 
+- `handler` - the class string of the options handler
 - `related` - the class string of the related model
 - `title` - the related column to use as the option title 
 
-The title option will default to the model's title column.  
+The handler will default to a class packaged with the field type. The title option will default to the model's title column.  
 
 #### Example
 
