@@ -1,8 +1,8 @@
 <select name="{{ field_type.getInputName() }}" class="form-control select2">
 
-    {% for value, option in field_type.options %}
+    {% for value, title in field_type.options %}
 
-        <option value="{{ value }}" {{ field_type.value == value ? 'selected' }}>{{ option }}</option>
+        <option value="{{ value }}" {{ field_type.value == value ? 'selected' }}>{{ title }}</option>
 
     {% endfor %}
 
