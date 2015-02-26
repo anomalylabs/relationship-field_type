@@ -29,7 +29,7 @@ class RelationshipFieldTypeOptions
 
         return $model->all()->lists(
             array_get($fieldType->getConfig(), 'title', $model->getTitleName()),
-            $model->getKeyName()
+            array_get($fieldType->getConfig(), 'key', $model->getKeyName())
         );
     }
 }
