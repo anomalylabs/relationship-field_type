@@ -32,11 +32,11 @@ class RelationshipFieldType extends FieldType
      * Get the relation.
      *
      * @param EloquentModel $model
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne|mixed|null
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|mixed|null
      */
     public function getRelation(EloquentModel $model)
     {
-        return $model->hasOne(array_get($this->config, 'related'), 'id', $this->getColumnName());
+        return $model->belongsTo(array_get($this->config, 'related'), $this->getColumnName());
     }
 
     /**
