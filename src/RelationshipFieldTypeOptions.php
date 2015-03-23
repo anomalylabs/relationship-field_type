@@ -27,7 +27,9 @@ class RelationshipFieldTypeOptions
             return [];
         }
 
-        return $model->all()->lists(
+        $query = $model->newQuery();
+
+        return $query->get()->lists(
             array_get($fieldType->getConfig(), 'title', $model->getTitleName()),
             array_get($fieldType->getConfig(), 'key', $model->getKeyName())
         );
