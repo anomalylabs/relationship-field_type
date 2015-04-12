@@ -1,8 +1,7 @@
 <select
+        class="form-control"
         name="{{ field_type.input_name }}"
-        class="ui search dropdown"
-        {{ field_type.disabled ? 'disabled' }}
-        >
+        {{ field_type.disabled ? 'disabled' }}>
 
     {% for value, title in field_type.options %}
 
