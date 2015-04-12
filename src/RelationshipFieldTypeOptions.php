@@ -29,12 +29,10 @@ class RelationshipFieldTypeOptions
 
         $query = $model->newQuery();
 
-        return array_merge(
-            [null => trans($fieldType->getPlaceholder())],
-            $query->get()->lists(
-                array_get($fieldType->getConfig(), 'title', $model->getTitleName()),
-                array_get($fieldType->getConfig(), 'key', $model->getKeyName())
-            )
+        return [null => trans($fieldType->getPlaceholder())] +
+        $query->get()->lists(
+            array_get($fieldType->getConfig(), 'title', $model->getTitleName()),
+            array_get($fieldType->getConfig(), 'key', $model->getKeyName())
         );
     }
 }
