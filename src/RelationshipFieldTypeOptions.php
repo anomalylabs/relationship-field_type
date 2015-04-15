@@ -29,7 +29,7 @@ class RelationshipFieldTypeOptions
 
         $query = $model->newQuery();
 
-        return [null => trans($fieldType->getPlaceholder()) . '...'] +
+        return [null => trans($fieldType->getPlaceholder())] +
         $query->get()->lists(
             array_get($fieldType->getConfig(), 'title', $model->getTitleName()),
             array_get($fieldType->getConfig(), 'key', $model->getKeyName())
