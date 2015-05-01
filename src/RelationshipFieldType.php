@@ -2,6 +2,7 @@
 
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
 use Anomaly\Streams\Platform\Model\EloquentModel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * Class RelationshipFieldType
@@ -31,12 +32,13 @@ class RelationshipFieldType extends FieldType
     /**
      * Get the relation.
      *
-     * @param EloquentModel $model
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|mixed|null
+     * @return BelongsTo
      */
-    public function getRelation(EloquentModel $model)
+    public function getRelation()
     {
-        return $model->belongsTo(array_get($this->config, 'related'), $this->getColumnName());
+        $entry = $this->getEntry();
+
+        return $entry->belongsTo(array_get($this->config, 'related'), $this->getColumnName());
     }
 
     /**
