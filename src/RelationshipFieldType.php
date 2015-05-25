@@ -70,14 +70,4 @@ class RelationshipFieldType extends FieldType
     {
         return parent::getColumnName() . '_id';
     }
-
-    /**
-     * Get the placeholder.
-     *
-     * @return null|string
-     */
-    public function getPlaceholder()
-    {
-        return $this->placeholder ?: 'anomaly.field_type.relationship::input.placeholder';
-    }
 }
