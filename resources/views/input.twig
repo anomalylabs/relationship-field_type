@@ -5,7 +5,7 @@
 
     {% for value, title in field_type.options %}
 
-        <option value="{{ value }}" {{ field_type.value == value ? 'selected' }}>{{ title }}</option>
+        <option value="{{ value }}" {{ field_type.value == value ? 'selected' }}>{{ trans(title) }}</option>
 
     {% endfor %}
 
