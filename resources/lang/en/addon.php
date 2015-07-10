@@ -2,5 +2,5 @@
 
 return [
     'name'        => 'Relationship',
-    'description' => 'An entry relation field type.',
+    'description' => 'A related entry dropdown field type.'
 ];
