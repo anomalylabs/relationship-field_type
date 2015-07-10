@@ -29,11 +29,14 @@ class RelationshipFieldTypeOptions
 
         $query = $model->newQuery();
 
+        $title = array_get($fieldType->getConfig(), 'title');
+        $key   = array_get($fieldType->getConfig(), 'key');
+
         return array_filter(
             [null => $fieldType->getPlaceholder()] +
             $query->get()->lists(
-                array_get($fieldType->getConfig(), 'title', $model->getTitleName()),
-                array_get($fieldType->getConfig(), 'key', $model->getKeyName())
+                $title ?: $model->getTitleName(),
+                $key ?: $model->getKeyName()
             )
         );
     }
