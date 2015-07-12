@@ -1,8 +1,10 @@
 <?php namespace Anomaly\RelationshipFieldType;
 
+use Anomaly\RelationshipFieldType\Command\BuildOptions;
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Bus\DispatchesCommands;
 
 /**
  * Class RelationshipFieldType
@@ -15,6 +17,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class RelationshipFieldType extends FieldType
 {
 
+    use DispatchesCommands;
+
     /**
      * The input view.
      *
@@ -23,11 +27,20 @@ class RelationshipFieldType extends FieldType
     protected $inputView = 'anomaly.field_type.relationship::input';
 
     /**
-     * The options handler.
+     * The field type config.
      *
-     * @var string
+     * @var array
      */
-    protected $options = 'Anomaly\RelationshipFieldType\RelationshipFieldTypeOptions@handle';
+    protected $config = [
+        'handler' => 'Anomaly\RelationshipFieldType\RelationshipFieldTypeOptions@handle'
+    ];
+
+    /**
+     * The dropdown options.
+     *
+     * @var null|array
+     */
+    protected $options = null;
 
     /**
      * Get the relation.
@@ -42,16 +55,6 @@ class RelationshipFieldType extends FieldType
     }
 
     /**
-     * Get the options.
-     *
-     * @return array
-     */
-    public function getOptions()
-    {
-        return app()->call(array_get($this->config, 'handler', $this->options), ['fieldType' => $this]);
-    }
-
-    /**
      * Get the related model.
      *
      * @return EloquentModel
@@ -59,6 +62,33 @@ class RelationshipFieldType extends FieldType
     public function getRelatedModel()
     {
         return app()->make(array_get($this->config, 'related'));
+    }
+
+    /**
+     * Get the dropdown options.
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        if ($this->options === null) {
+            $this->dispatch(new BuildOptions($this));
+        }
+
+        return $this->options;
+    }
+
+    /**
+     * Set the options.
+     *
+     * @param array $options
+     * @return $this
+     */
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
+
+        return $this;
     }
 
     /**
