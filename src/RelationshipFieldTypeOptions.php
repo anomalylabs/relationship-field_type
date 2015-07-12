@@ -23,15 +23,12 @@ class RelationshipFieldTypeOptions
 
         $query = $model->newQuery();
 
-        $title = array_get($fieldType->getConfig(), 'title');
-        $key   = array_get($fieldType->getConfig(), 'key');
-
         $fieldType->setOptions(
             array_filter(
                 [null => $fieldType->getPlaceholder()] +
                 $query->get()->lists(
-                    $title ?: $model->getTitleName(),
-                    $key ?: $model->getKeyName()
+                    $model->getTitleName(),
+                    $model->getKeyName()
                 )
             )
         );

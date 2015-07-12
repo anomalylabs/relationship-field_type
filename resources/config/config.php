@@ -20,11 +20,5 @@ return [
                 return array_combine($models, $names);
             }
         ]
-    ],
-    'title'   => [
-        'type' => 'anomaly.field_type.text'
-    ],
-    'key'     => [
-        'type' => 'anomaly.field_type.text'
     ]
 ];
