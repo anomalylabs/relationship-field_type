@@ -1,7 +1,5 @@
 <?php namespace Anomaly\RelationshipFieldType;
 
-use Anomaly\Streams\Platform\Model\EloquentModel;
-
 /**
  * Class RelationshipFieldTypeOptions
  *
@@ -23,20 +21,18 @@ class RelationshipFieldTypeOptions
     {
         $model = $fieldType->getRelatedModel();
 
-        if (!$model instanceof EloquentModel) {
-            return [];
-        }
-
         $query = $model->newQuery();
 
         $title = array_get($fieldType->getConfig(), 'title');
         $key   = array_get($fieldType->getConfig(), 'key');
 
-        return array_filter(
-            [null => $fieldType->getPlaceholder()] +
-            $query->get()->lists(
-                $title ?: $model->getTitleName(),
-                $key ?: $model->getKeyName()
+        $fieldType->setOptions(
+            array_filter(
+                [null => $fieldType->getPlaceholder()] +
+                $query->get()->lists(
+                    $title ?: $model->getTitleName(),
+                    $key ?: $model->getKeyName()
+                )
             )
         );
     }
