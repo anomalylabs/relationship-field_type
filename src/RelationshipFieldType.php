@@ -4,7 +4,7 @@ use Anomaly\RelationshipFieldType\Command\BuildOptions;
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Foundation\Bus\DispatchesCommands;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 /**
  * Class RelationshipFieldType
@@ -17,7 +17,7 @@ use Illuminate\Foundation\Bus\DispatchesCommands;
 class RelationshipFieldType extends FieldType
 {
 
-    use DispatchesCommands;
+    use DispatchesJobs;
 
     /**
      * The input view.
@@ -25,6 +25,13 @@ class RelationshipFieldType extends FieldType
      * @var string
      */
     protected $inputView = 'anomaly.field_type.relationship::input';
+
+    /**
+     * The filter view.
+     *
+     * @var string
+     */
+    protected $filterView = 'anomaly.field_type.relationship::filter';
 
     /**
      * The field type config.

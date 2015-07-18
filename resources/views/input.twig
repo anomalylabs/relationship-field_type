@@ -1,10 +1,5 @@
-<select
-        class="form-control"
-        name="{{ field_type.input_name }}"
-        {{ field_type.disabled ? 'disabled' }}>
-
+<select class="form-control" name="{{ field_type.input_name }}" {{ field_type.disabled ? 'disabled' }}>
     {% for value, title in field_type.options %}
         <option value="{{ value }}" {{ field_type.value.id == value ? 'selected' }}>{{ trans(title) }}</option>
     {% endfor %}
-
 </select>

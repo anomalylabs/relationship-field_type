@@ -29,7 +29,7 @@ class RelationshipFieldTypeOptions
                 $query->get()->lists(
                     $model->getTitleName(),
                     $model->getKeyName()
-                )
+                )->all()
             )
         );
     }
