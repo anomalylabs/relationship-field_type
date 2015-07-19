@@ -1,6 +1,7 @@
 <?php namespace Anomaly\RelationshipFieldType;
 
 use Anomaly\Streams\Platform\Addon\FieldType\FieldTypeModifier;
+use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 
 /**
@@ -21,6 +22,22 @@ class RelationshipFieldTypeModifier extends FieldTypeModifier
      * @var RelationshipFieldType
      */
     protected $fieldType;
+
+    /**
+     * Modify the value.
+     *
+     * @param $value
+     * @return integer
+     */
+    public function modify($value)
+    {
+        if ($value instanceof EntryInterface) {
+            return $value->getId();
+        }
+
+        return $value;
+    }
+
 
     /**
      * Restore the value.
