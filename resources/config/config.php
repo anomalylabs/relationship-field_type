@@ -1,23 +1,28 @@
 <?php
 
+use Anomaly\Streams\Platform\Stream\Contract\StreamInterface;
+
 return [
     'related' => [
         'type'   => 'anomaly.field_type.select',
         'config' => [
             'options' => function (\Anomaly\Streams\Platform\Stream\Contract\StreamRepositoryInterface $streams) {
 
-                $streams = $streams->all();
+                $options = [];
 
-                $names = $streams->lists('name');
+                /* @var StreamInterface as $stream */
+                foreach ($streams->all() as $stream) {
+                    $options[ucwords(str_replace('_', ' ', $stream->getNamespace()))][$stream->getEntryModelName(
+                    )] = $stream->getName();
+                }
 
-                $models = array_map(
-                    function (\Anomaly\Streams\Platform\Stream\StreamModel $stream) {
-                        return $stream->getEntryModelName();
-                    },
-                    $streams->all()
-                );
+                foreach ($options as $namespace) {
+                    ksort($namespace);
+                }
 
-                return array_combine($models, $names);
+                ksort($options);
+
+                return $options;
             }
         ]
     ]
