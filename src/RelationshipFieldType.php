@@ -20,6 +20,13 @@ class RelationshipFieldType extends FieldType
     use DispatchesJobs;
 
     /**
+     * The underlying database column type
+     *
+     * @var string
+     */
+    protected $columnType = 'integer';
+
+    /**
      * The input view.
      *
      * @var string
