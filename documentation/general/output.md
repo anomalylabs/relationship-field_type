@@ -1,6 +1,6 @@
 # Output
 
-This field type the related model.
+This field type returns the related model.
 
 ```
 // Twig usage
