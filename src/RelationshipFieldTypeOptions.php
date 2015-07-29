@@ -24,13 +24,10 @@ class RelationshipFieldTypeOptions
         $query = $model->newQuery();
 
         $fieldType->setOptions(
-            array_filter(
-                [null => $fieldType->getPlaceholder()] +
-                $query->get()->lists(
-                    $model->getTitleName(),
-                    $model->getKeyName()
-                )->all()
-            )
+            $query->get()->lists(
+                $model->getTitleName(),
+                $model->getKeyName()
+            )->all()
         );
     }
 }
