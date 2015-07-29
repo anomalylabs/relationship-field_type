@@ -8,7 +8,7 @@ protected $fields = [
         'type'   => 'anomaly.field_type.relationship',
         'config' => [
             'related' => 'Anomaly\UsersModule\User\UserModel',
-            'handler' => 'Anomaly\UsersModule\User\UserOptions@handle',
+            'handler' => 'Anomaly\RelationshipFieldType\RelationshipFieldTypeOptions@handle',
         ]
     ]
 ];
@@ -16,8 +16,12 @@ protected $fields = [
 
 ### `related`
 
-The namespaced related model
+The class string of the related model.
 
 ### `handler`
 
-A handler to further process the options
+The options handler callable string. Any valid callable class string can be used. The default value is `'Anomaly\RelationshipFieldType\RelationshipFieldTypeOptions@handle'`.
+
+The handler is responsible for setting the available options on the field type instance.
+
+**NOTE:** This option can not be set through the GUI configuration. 

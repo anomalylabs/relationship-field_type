@@ -1,11 +1,21 @@
 # Output
 
-This field type returns the related model.
+This field type returns the related entry instance.
 
 ```
 // Twig usage
-{{ entry.example }} // can call methods from the related model
+{{ entry.example.id }} or {{ entry.example.name }}
 
 // API usage
-$entry->example; // can call methods from the related model
+$entry->example->id; or $entry->example->name;
+```
+
+This field type can be access on related instances too.
+
+```
+// Twig usage
+{{ entry.parent.grand_parent.name }}
+
+// API usage
+$entry->parent->grand_parent->name;
 ```
