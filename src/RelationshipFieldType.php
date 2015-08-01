@@ -106,6 +106,16 @@ class RelationshipFieldType extends FieldType
     }
 
     /**
+     * Get the placeholder.
+     *
+     * @return null|string
+     */
+    public function getPlaceholder()
+    {
+        return ($this->placeholder !== null) ? $this->placeholder : 'anomaly.field_type.relationship::input.placeholder';
+    }
+
+    /**
      * Get the database column name.
      *
      * @return null|string
