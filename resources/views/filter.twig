@@ -1,6 +1,6 @@
 <select class="form-control" name="{{ field_type.input_name }}">
 
-    <option>{{ trans(field_type.placeholder) }}</option>
+    <option value="">{{ trans(field_type.placeholder) }}</option>
 
     {% for value, title in field_type.options %}
         <option value="{{ value }}" {{ field_type.value == value ? 'selected' }}>{{ trans(title) }}</option>
