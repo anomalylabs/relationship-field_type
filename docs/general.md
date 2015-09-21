@@ -32,11 +32,16 @@ You may also use the relation method that is automatically compiled on the model
         'example' => [
             'type'   => 'anomaly.field_type.relationship',
             'config' => [
-                'related' => 'Anomaly\UsersModule\User\UserModel',
-                'handler' => 'Anomaly\RelationshipFieldType\RelationshipFieldTypeOptions@handle',
+                'column_type' => 'integer',
+                'related'     => 'Anomaly\UsersModule\User\UserModel',
+                'handler'     => 'Anomaly\RelationshipFieldType\RelationshipFieldTypeOptions@handle',
             ]
         ]
     ];
+
+### `column_type`
+
+An alternative column type. The default value is `integer`.
 
 ### `related`
 

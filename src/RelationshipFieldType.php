@@ -124,4 +124,14 @@ class RelationshipFieldType extends FieldType
     {
         return parent::getColumnName() . '_id';
     }
+
+    /**
+     * Get the column type.
+     *
+     * @return string
+     */
+    public function getColumnType()
+    {
+        return array_get($this->getConfig(), 'column_type', parent::getColumnType());
+    }
 }
