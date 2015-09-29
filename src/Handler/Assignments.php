@@ -1,14 +1,16 @@
-<?php namespace Anomaly\RelationshipFieldType;
+<?php namespace Anomaly\RelationshipFieldType\Handler;
+
+use Anomaly\RelationshipFieldType\RelationshipFieldType;
 
 /**
- * Class RelationshipFieldTypeOptions
+ * Class Assignments
  *
  * @link          http://anomaly.is/streams-platform
  * @author        AnomalyLabs, Inc. <hello@anomaly.is>
  * @author        Ryan Thompson <ryan@anomaly.is>
  * @package       Anomaly\RelationshipFieldType
  */
-class RelationshipFieldTypeOptions
+class Assignments
 {
 
     /**

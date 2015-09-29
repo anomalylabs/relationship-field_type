@@ -41,12 +41,23 @@ class RelationshipFieldType extends FieldType
     protected $filterView = 'anomaly.field_type.relationship::filter';
 
     /**
+     * The pre-defined handlers.
+     *
+     * @var array
+     */
+    protected $handlers = [
+        'fields'      => 'Anomaly\RelationshipFieldType\Handler\Fields@handle',
+        'related'     => 'Anomaly\RelationshipFieldType\Handler\Related@handle',
+        'assignments' => 'Anomaly\RelationshipFieldType\Handler\Assignments@handle'
+    ];
+
+    /**
      * The field type config.
      *
      * @var array
      */
     protected $config = [
-        'handler' => 'Anomaly\RelationshipFieldType\RelationshipFieldTypeOptions@handle'
+        'handler' => 'related'
     ];
 
     /**
@@ -103,6 +114,16 @@ class RelationshipFieldType extends FieldType
         $this->options = $options;
 
         return $this;
+    }
+
+    /**
+     * Get the pre-defined handlers.
+     *
+     * @return array
+     */
+    public function getHandlers()
+    {
+        return $this->handlers;
     }
 
     /**
