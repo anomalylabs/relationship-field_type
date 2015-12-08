@@ -75,8 +75,9 @@ class RelationshipFieldType extends FieldType
     public function getRelation()
     {
         $entry = $this->getEntry();
-
-        return $entry->belongsTo(array_get($this->config, 'related'), $this->getColumnName());
+        $model = $this->getRelatedModel();
+        
+        return $entry->belongsTo(get_class($model), $this->getColumnName());
     }
 
     /**
