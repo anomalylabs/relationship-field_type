@@ -36,4 +36,23 @@ class RelationshipFieldTypeModifier extends FieldTypeModifier
 
         return $value;
     }
+
+
+    /**
+     * Restore the value.
+     *
+     * @param $value
+     * @return null|EloquentModel
+     */
+    public function restore($value)
+    {
+        if (is_numeric($value)) {
+
+            $relation = $this->fieldType->getRelatedModel();
+
+            return $relation->find($value);
+        }
+
+        return $value;
+    }
 }
