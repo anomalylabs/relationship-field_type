@@ -76,7 +76,7 @@ class RelationshipFieldType extends FieldType
     {
         $entry = $this->getEntry();
         $model = $this->getRelatedModel();
-        
+
         return $entry->belongsTo(get_class($model), $this->getColumnName());
     }
 
