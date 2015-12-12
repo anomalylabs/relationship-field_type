@@ -87,7 +87,7 @@ class RelationshipFieldType extends FieldType
      */
     public function getRelatedModel()
     {
-        return app()->make(array_get($this->config, 'related'));
+        return app()->make($this->config('related'));
     }
 
     /**
