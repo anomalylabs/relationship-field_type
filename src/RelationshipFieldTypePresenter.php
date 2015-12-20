@@ -22,16 +22,15 @@ class RelationshipFieldTypePresenter extends FieldTypePresenter
      */
     public function __get($key)
     {
-        try {
-            return parent::__get($key);
-        } catch (\Exception $e) {
-
-            if (!$related = $this->object->getValue()) {
-                return null;
-            }
-
-            return $related->{$key};
+        if ($return = parent::__get($key)) {
+            return $return;
         }
+
+        if (!$related = $this->object->getValue()) {
+            return null;
+        }
+
+        return self::$__decorator->decorate($related)->{$key};
     }
 
     /**
@@ -44,15 +43,14 @@ class RelationshipFieldTypePresenter extends FieldTypePresenter
      */
     public function __call($method, $arguments)
     {
-        try {
-            return parent::__call($method, $arguments);
-        } catch (\Exception $e) {
-
-            if (!$related = $this->object->getValue()) {
-                return null;
-            }
-
-            return call_user_func_array([$related, $method], $arguments);
+        if ($return = parent::__call($method, $arguments)) {
+            return $return;
         }
+
+        if (!$related = $this->object->getValue()) {
+            return null;
+        }
+
+        return call_user_func_array([self::$__decorator->decorate($related), $method], $arguments);
     }
 }
