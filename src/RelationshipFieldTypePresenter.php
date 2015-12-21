@@ -45,12 +45,25 @@ class RelationshipFieldTypePresenter extends FieldTypePresenter
     public function __call($method, $arguments)
     {
         try {
+<<<<<<< Updated upstream
             return parent::__call($method, $arguments);
         } catch (\Exception $e) {
 
             if (!$related = $this->object->getValue()) {
                 return null;
             }
+=======
+            if ($return = parent::__call($method, $arguments)) {
+                return $return;
+            }
+        } catch (\Exception $e) {
+            if ($related = $this->object->getValue()) {
+                if ($return = call_user_func_array([self::__getDecorator()->decorate($related), $method], $arguments)) {
+                    return $return;
+                }
+            }
+        }
+>>>>>>> Stashed changes
 
             return call_user_func_array([$related, $method], $arguments);
         }
