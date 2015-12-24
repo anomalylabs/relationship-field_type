@@ -4,8 +4,9 @@ use Anomaly\Streams\Platform\Stream\Contract\StreamInterface;
 
 return [
     'related' => [
-        'type'   => 'anomaly.field_type.select',
-        'config' => [
+        'required' => true,
+        'type'     => 'anomaly.field_type.select',
+        'config'   => [
             'options' => function (\Anomaly\Streams\Platform\Stream\Contract\StreamRepositoryInterface $streams) {
 
                 $options = [];
