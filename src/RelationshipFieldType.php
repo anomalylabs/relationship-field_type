@@ -3,6 +3,7 @@
 use Anomaly\RelationshipFieldType\Command\BuildOptions;
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
 use Anomaly\Streams\Platform\Model\EloquentModel;
+use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
@@ -25,13 +26,6 @@ class RelationshipFieldType extends FieldType
      * @var string
      */
     protected $columnType = 'integer';
-
-    /**
-     * The input view.
-     *
-     * @var string
-     */
-    protected $inputView = 'anomaly.field_type.relationship::input';
 
     /**
      * The filter view.
@@ -57,7 +51,8 @@ class RelationshipFieldType extends FieldType
      * @var array
      */
     protected $config = [
-        'handler' => 'related'
+        'handler' => 'related',
+        'mode'    => 'dropdown'
     ];
 
     /**
@@ -66,6 +61,39 @@ class RelationshipFieldType extends FieldType
      * @var null|array
      */
     protected $options = null;
+
+    /**
+     * The cache repository.
+     *
+     * @var Repository
+     */
+    protected $cache;
+
+    /**
+     * Create a new RelationshipFieldType instance.
+     *
+     * @param Repository $cache
+     */
+    public function __construct(Repository $cache)
+    {
+        $this->cache = $cache;
+    }
+
+    /**
+     * Return the config key.
+     *
+     * @return string
+     */
+    public function key()
+    {
+        $this->cache->put(
+            'anomaly/relationship-field_type::' . ($key = md5(json_encode($this->getConfig()))),
+            $this->getConfig(),
+            30
+        );
+
+        return $key;
+    }
 
     /**
      * Get the relation.
@@ -135,6 +163,16 @@ class RelationshipFieldType extends FieldType
     public function getPlaceholder()
     {
         return ($this->placeholder !== null) ? $this->placeholder : 'anomaly.field_type.relationship::input.placeholder';
+    }
+
+    /**
+     * Return the input view.
+     *
+     * @return string
+     */
+    public function getInputView()
+    {
+        return 'anomaly.field_type.relationship::' . $this->config('mode');
     }
 
     /**

@@ -2,7 +2,13 @@
 
 return [
     'related' => [
-        'label'        => 'Related Stream',
-        'instructions' => 'Specify the related stream entries to display in the dropdown.'
+        'label' => 'Related Stream'
+    ],
+    'mode'    => [
+        'label'  => 'Input Mode',
+        'option' => [
+            'dropdown' => 'Dropdown',
+            'lookup'   => 'Lookup'
+        ]
     ]
 ];
