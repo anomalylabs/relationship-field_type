@@ -29,13 +29,15 @@ class LookupController extends AdminController
         /* @var Collection $config */
         $config = $this->dispatch(new GetConfiguration($key));
 
-        $table->setModel($config->get('model'));
+        $table
+            ->setConfig($config)
+            ->setModel($config->get('related'));
 
         return $table->render();
     }
 
-    public function selected(ValueTableBuilder $table, $key)
+    public function selected($key)
     {
-        return $table->setUploaded(explode(',', $this->request->get('uploaded')))->make()->getTableContent();
+        return $key . '[' . $this->request->get('uploaded') . ']';
     }
 }

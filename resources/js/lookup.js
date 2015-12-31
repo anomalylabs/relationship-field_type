@@ -1,34 +1,34 @@
 $(function () {
 
-    // Initialize file pickers
-    $('.file-field_type').each(function () {
+    // Initialize relationship pickers
+    $('.relationship-field_type').each(function () {
 
         var wrapper = $(this);
         var field = wrapper.data('field');
         var modal = $('#' + field + '-modal');
 
-        modal.on('click', '[data-file]', function (e) {
+        modal.on('click', '[data-entry]', function (e) {
 
             e.preventDefault();
 
-            modal.find('.modal-content').append('<div class="modal-loading"><div class="active loader"></div></div>');
-
-            wrapper.find('.selected').load(APPLICATION_URL + '/streams/file-field_type/selected?uploaded=' + $(this).data('file'), function () {
+            wrapper.find('.selected').load(APPLICATION_URL + '/streams/relationship-field_type/selected/' + $(this).data('key') + '?uploaded=' + $(this).data('entry'), function () {
                 modal.modal('hide');
             });
 
-            $('[name="' + field + '"]').val($(this).data('file'));
+            $('[name="' + field + '"]').val($(this).data('entry'));
+
+            $(wrapper).find('[data-dismiss="relationship"]').removeClass('hidden');
         });
 
-        $(wrapper).on('click', '[data-dismiss="file"]', function (e) {
+        $(wrapper).on('click', '[data-dismiss="relationship"]', function (e) {
 
             e.preventDefault();
 
             $('[name="' + field + '"]').val('');
 
-            wrapper.find('.selected').load(APPLICATION_URL + '/streams/file-field_type/selected', function () {
-                modal.modal('hide');
-            });
+            wrapper.find('.selected').html('');
+
+            $(this).addClass('hidden');
         });
     });
 });

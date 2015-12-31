@@ -40,6 +40,8 @@ class GetConfiguration implements SelfHandling
      */
     public function handle(Repository $cache)
     {
-        return new Collection($cache->get('anomaly/relationship-field_type::' . $this->key));
+        return new Collection(
+            array_merge($cache->get('anomaly/relationship-field_type::' . $this->key), ['key' => $this->key])
+        );
     }
 }
