@@ -45,12 +45,14 @@ class GetLookupDefinition implements SelfHandling
      */
     public function handle(RelationshipFieldType $fieldType, AddonCollection $addons, Repository $config)
     {
-        $definition = $config->get($fieldType->getNamespace('lookup.' . $this->table->config('related')), []);
+        $definition = [];
 
         /* @var Addon $addon */
         foreach ($addons->withConfig('lookup.' . $this->table->config('related')) as $addon) {
             $definition = $config->get($addon->getNamespace('lookup.' . $this->table->config('related')));
         }
+
+        $definition = $config->get($fieldType->getNamespace('lookup.' . $this->table->config('related')), $definition);
 
         return $definition;
     }
