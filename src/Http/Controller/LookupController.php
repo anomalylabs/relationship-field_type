@@ -1,6 +1,8 @@
 <?php namespace Anomaly\RelationshipFieldType\Http\Controller;
 
 use Anomaly\RelationshipFieldType\Command\GetConfiguration;
+use Anomaly\RelationshipFieldType\Command\HydrateLookup;
+use Anomaly\RelationshipFieldType\Command\HydrateLookupTable;
 use Anomaly\RelationshipFieldType\Table\LookupTableBuilder;
 use Anomaly\Streams\Platform\Http\Controller\AdminController;
 use Anomaly\Streams\Platform\Support\Collection;
@@ -32,6 +34,8 @@ class LookupController extends AdminController
         $table
             ->setConfig($config)
             ->setModel($config->get('related'));
+
+        $this->dispatch(new HydrateLookupTable($table));
 
         return $table->render();
     }
