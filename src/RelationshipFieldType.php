@@ -7,6 +7,7 @@ use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 use Anomaly\Streams\Platform\Support\Collection;
 use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
@@ -73,13 +74,22 @@ class RelationshipFieldType extends FieldType
     protected $cache;
 
     /**
+     * The service container.
+     *
+     * @var Container
+     */
+    protected $container;
+
+    /**
      * Create a new RelationshipFieldType instance.
      *
      * @param Repository $cache
+     * @param Container  $container
      */
-    public function __construct(Repository $cache)
+    public function __construct(Repository $cache, Container $container)
     {
-        $this->cache = $cache;
+        $this->cache     = $cache;
+        $this->container = $container;
     }
 
     /**
@@ -106,7 +116,7 @@ class RelationshipFieldType extends FieldType
     public function tree()
     {
         /* @var ValueTreeBuilder $tree */
-        $tree = app(ValueTreeBuilder::class);
+        $tree = $this->container->make(ValueTreeBuilder::class);
 
         $value = $this->getValue();
 
@@ -143,7 +153,7 @@ class RelationshipFieldType extends FieldType
      */
     public function getRelatedModel()
     {
-        return app()->make($this->config('related'));
+        return $this->container->make($this->config('related'));
     }
 
     /**
