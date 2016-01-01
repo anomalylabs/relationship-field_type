@@ -4,15 +4,15 @@
 <a
         data-toggle="modal"
         data-target="#{{ field_type.field_name }}-modal"
-        class="btn btn-default btn-xs"
+        class="btn btn-success btn-xs"
         href="{{ url('streams/relationship-field_type/index/' ~ field_type.key) }}"
 >{{ trans('streams::button.select') }}</a>
 
-<a
+{#<a
         href="#"
         data-dismiss="relationship"
         class="btn btn-danger btn-xs {{ field_type.value ?: 'hidden' }}"
->{{ trans('streams::button.remove') }}</a>
+>{{ trans('streams::button.remove') }}</a>#}
 
 <input
         type="hidden"
@@ -21,8 +21,10 @@
         {{ field_type.disabled ? 'disabled' }}
         {{ field_type.readonly ? 'readonly' }}>
 
-<div class="selected">
-    {{ field_type.object.key }} [{{ field_type.value.id ?: field_type.value }}]
+<div class="selected well">
+
+    {{ field_type.tree|raw }}
+
 </div>
 
 <div class="modal remote" id="{{ field_type.field_name }}-modal">

@@ -1,8 +1,11 @@
 <?php namespace Anomaly\RelationshipFieldType;
 
 use Anomaly\RelationshipFieldType\Command\BuildOptions;
+use Anomaly\RelationshipFieldType\Tree\ValueTreeBuilder;
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
+use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 use Anomaly\Streams\Platform\Model\EloquentModel;
+use Anomaly\Streams\Platform\Support\Collection;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -93,6 +96,31 @@ class RelationshipFieldType extends FieldType
         );
 
         return $key;
+    }
+
+    /**
+     * Value table.
+     *
+     * @return string
+     */
+    public function tree()
+    {
+        /* @var ValueTreeBuilder $tree */
+        $tree = app(ValueTreeBuilder::class);
+
+        $value = $this->getValue();
+
+        if ($value instanceof EntryInterface) {
+            $value = $value->getId();
+        }
+
+        return $tree
+            ->setConfig(new Collection($this->getConfig()))
+            ->setModel($this->config('related'))
+            ->setSelected($value)
+            ->build()
+            ->response()
+            ->getTreeContent();
     }
 
     /**
