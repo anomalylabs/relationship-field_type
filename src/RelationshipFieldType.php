@@ -1,8 +1,13 @@
 <?php namespace Anomaly\RelationshipFieldType;
 
 use Anomaly\RelationshipFieldType\Command\BuildOptions;
+use Anomaly\RelationshipFieldType\Tree\ValueTreeBuilder;
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
+use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 use Anomaly\Streams\Platform\Model\EloquentModel;
+use Anomaly\Streams\Platform\Support\Collection;
+use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
@@ -25,13 +30,6 @@ class RelationshipFieldType extends FieldType
      * @var string
      */
     protected $columnType = 'integer';
-
-    /**
-     * The input view.
-     *
-     * @var string
-     */
-    protected $inputView = 'anomaly.field_type.relationship::input';
 
     /**
      * The filter view.
@@ -57,7 +55,8 @@ class RelationshipFieldType extends FieldType
      * @var array
      */
     protected $config = [
-        'handler' => 'related'
+        'handler' => 'related',
+        'mode'    => 'dropdown'
     ];
 
     /**
@@ -68,6 +67,73 @@ class RelationshipFieldType extends FieldType
     protected $options = null;
 
     /**
+     * The cache repository.
+     *
+     * @var Repository
+     */
+    protected $cache;
+
+    /**
+     * The service container.
+     *
+     * @var Container
+     */
+    protected $container;
+
+    /**
+     * Create a new RelationshipFieldType instance.
+     *
+     * @param Repository $cache
+     * @param Container  $container
+     */
+    public function __construct(Repository $cache, Container $container)
+    {
+        $this->cache     = $cache;
+        $this->container = $container;
+    }
+
+    /**
+     * Return the config key.
+     *
+     * @return string
+     */
+    public function key()
+    {
+        $this->cache->put(
+            'anomaly/relationship-field_type::' . ($key = md5(json_encode($this->getConfig()))),
+            $this->getConfig(),
+            30
+        );
+
+        return $key;
+    }
+
+    /**
+     * Value table.
+     *
+     * @return string
+     */
+    public function tree()
+    {
+        /* @var ValueTreeBuilder $tree */
+        $tree = $this->container->make(ValueTreeBuilder::class);
+
+        $value = $this->getValue();
+
+        if ($value instanceof EntryInterface) {
+            $value = $value->getId();
+        }
+
+        return $tree
+            ->setConfig(new Collection($this->getConfig()))
+            ->setModel($this->config('related'))
+            ->setSelected($value)
+            ->build()
+            ->response()
+            ->getTreeContent();
+    }
+
+    /**
      * Get the relation.
      *
      * @return BelongsTo
@@ -76,7 +142,7 @@ class RelationshipFieldType extends FieldType
     {
         $entry = $this->getEntry();
         $model = $this->getRelatedModel();
-        
+
         return $entry->belongsTo(get_class($model), $this->getColumnName());
     }
 
@@ -87,7 +153,7 @@ class RelationshipFieldType extends FieldType
      */
     public function getRelatedModel()
     {
-        return app()->make(array_get($this->config, 'related'));
+        return $this->container->make($this->config('related'));
     }
 
     /**
@@ -135,6 +201,16 @@ class RelationshipFieldType extends FieldType
     public function getPlaceholder()
     {
         return ($this->placeholder !== null) ? $this->placeholder : 'anomaly.field_type.relationship::input.placeholder';
+    }
+
+    /**
+     * Return the input view.
+     *
+     * @return string
+     */
+    public function getInputView()
+    {
+        return 'anomaly.field_type.relationship::' . $this->config('mode');
     }
 
     /**

@@ -4,14 +4,15 @@ use Anomaly\Streams\Platform\Stream\Contract\StreamInterface;
 
 return [
     'related' => [
-        'type'   => 'anomaly.field_type.select',
-        'config' => [
+        'required' => true,
+        'type'     => 'anomaly.field_type.select',
+        'config'   => [
             'options' => function (\Anomaly\Streams\Platform\Stream\Contract\StreamRepositoryInterface $streams) {
 
                 $options = [];
 
                 /* @var StreamInterface as $stream */
-                foreach ($streams->all() as $stream) {
+                foreach ($streams->visible() as $stream) {
                     $options[ucwords(str_replace('_', ' ', $stream->getNamespace()))][$stream->getEntryModelName(
                     )] = $stream->getName();
                 }
@@ -24,6 +25,16 @@ return [
 
                 return $options;
             }
+        ]
+    ],
+    'mode'    => [
+        'required' => true,
+        'type'     => 'anomaly.field_type.select',
+        'config'   => [
+            'options' => [
+                'dropdown' => 'anomaly.field_type.relationship::config.mode.option.dropdown',
+                'lookup'   => 'anomaly.field_type.relationship::config.mode.option.lookup'
+            ]
         ]
     ]
 ];
