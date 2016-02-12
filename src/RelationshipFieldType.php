@@ -44,6 +44,7 @@ class RelationshipFieldType extends FieldType
      * @var array
      */
     protected $handlers = [
+        'users'       => 'Anomaly\RelationshipFieldType\Handler\Users@handle',
         'fields'      => 'Anomaly\RelationshipFieldType\Handler\Fields@handle',
         'related'     => 'Anomaly\RelationshipFieldType\Handler\Related@handle',
         'assignments' => 'Anomaly\RelationshipFieldType\Handler\Assignments@handle'
