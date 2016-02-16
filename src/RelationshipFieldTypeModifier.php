@@ -36,4 +36,15 @@ class RelationshipFieldTypeModifier extends FieldTypeModifier
 
         return $value;
     }
+
+    /**
+     * Restore the value from storage format.
+     *
+     * @param  $value
+     * @return mixed
+     */
+    public function restore($value)
+    {
+        return $value ?: null;
+    }
 }
