@@ -1,10 +1,11 @@
 $(function () {
 
     // Initialize relationship pickers
-    $('.relationship-field_type').each(function () {
+    $('[data-provides="anomaly.field_type.relationship"]').each(function () {
 
-        var wrapper = $(this);
-        var field = wrapper.data('field');
+        var input = $(this);
+        var field = input.data('field_name');
+        var wrapper = input.closest('.form-group');
         var modal = $('#' + field + '-modal');
 
         modal.on('click', '[data-entry]', function (e) {
