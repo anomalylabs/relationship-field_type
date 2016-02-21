@@ -2,7 +2,7 @@
         class="c-select form-control"
         name="{{ field_type.input_name }}"
         {{ field_type.disabled ? 'disabled' }}
-        {{ field_type.required ? 'required' }}>
+        {{ field_type.readonly ? 'readonly' }}>
 
     {% if not field_type.required %}
         <option>{{ trans(field_type.placeholder) }}</option>
