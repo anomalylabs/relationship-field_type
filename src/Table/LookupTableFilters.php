@@ -29,7 +29,11 @@ class LookupTableFilters implements SelfHandling
 
         $builder->setFilters(
             [
-                $filter
+                'search' => [
+                    'fields' => [
+                        $filter
+                    ]
+                ]
             ]
         );
     }
