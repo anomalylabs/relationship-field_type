@@ -1,7 +1,7 @@
 <?php namespace Anomaly\RelationshipFieldType;
 
 use Anomaly\RelationshipFieldType\Command\BuildOptions;
-use Anomaly\RelationshipFieldType\Tree\ValueTreeBuilder;
+use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
 use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 use Anomaly\Streams\Platform\Model\EloquentModel;
@@ -114,10 +114,10 @@ class RelationshipFieldType extends FieldType
      *
      * @return string
      */
-    public function tree()
+    public function table()
     {
-        /* @var ValueTreeBuilder $tree */
-        $tree = $this->container->make(ValueTreeBuilder::class);
+        /* @var ValueTableBuilder $table */
+        $table = $this->container->make(ValueTableBuilder::class);
 
         $value = $this->getValue();
 
@@ -125,13 +125,13 @@ class RelationshipFieldType extends FieldType
             $value = $value->getId();
         }
 
-        return $tree
+        return $table
             ->setConfig(new Collection($this->getConfig()))
             ->setModel($this->config('related'))
             ->setSelected($value)
             ->build()
             ->response()
-            ->getTreeContent();
+            ->getTableContent();
     }
 
     /**

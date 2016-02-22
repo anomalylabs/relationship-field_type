@@ -1,7 +1,7 @@
 <?php namespace Anomaly\RelationshipFieldType\Command;
 
 use Anomaly\RelationshipFieldType\RelationshipFieldType;
-use Anomaly\RelationshipFieldType\Tree\ValueTreeBuilder;
+use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
 use Anomaly\Streams\Platform\Addon\Addon;
 use Anomaly\Streams\Platform\Addon\AddonCollection;
 use Illuminate\Contracts\Bus\SelfHandling;
@@ -19,20 +19,20 @@ class GetValueDefinition implements SelfHandling
 {
 
     /**
-     * The value tree.
+     * The value table.
      *
-     * @var ValueTreeBuilder
+     * @var ValueTableBuilder
      */
-    protected $tree;
+    protected $table;
 
     /**
-     * Create a new HydrateValueTree instance.
+     * Create a new HydrateValueTable instance.
      *
-     * @param ValueTreeBuilder $tree
+     * @param ValueTableBuilder $table
      */
-    public function __construct(ValueTreeBuilder $tree)
+    public function __construct(ValueTableBuilder $table)
     {
-        $this->tree = $tree;
+        $this->table = $table;
     }
 
     /**
@@ -48,11 +48,11 @@ class GetValueDefinition implements SelfHandling
         $definition = [];
 
         /* @var Addon $addon */
-        foreach ($addons->withConfig('value.' . $this->tree->config('related')) as $addon) {
-            $definition = $config->get($addon->getNamespace('value.' . $this->tree->config('related')));
+        foreach ($addons->withConfig('value.' . $this->table->config('related')) as $addon) {
+            $definition = $config->get($addon->getNamespace('value.' . $this->table->config('related')));
         }
 
-        $definition = $config->get($fieldType->getNamespace('value.' . $this->tree->config('related')), $definition);
+        $definition = $config->get($fieldType->getNamespace('value.' . $this->table->config('related')), $definition);
 
         return $definition;
     }

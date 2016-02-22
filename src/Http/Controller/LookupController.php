@@ -2,9 +2,9 @@
 
 use Anomaly\RelationshipFieldType\Command\GetConfiguration;
 use Anomaly\RelationshipFieldType\Command\HydrateLookupTable;
-use Anomaly\RelationshipFieldType\Command\HydrateValueTree;
+use Anomaly\RelationshipFieldType\Command\HydrateValueTable;
 use Anomaly\RelationshipFieldType\Table\LookupTableBuilder;
-use Anomaly\RelationshipFieldType\Tree\ValueTreeBuilder;
+use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
 use Anomaly\Streams\Platform\Http\Controller\AdminController;
 use Anomaly\Streams\Platform\Support\Collection;
 use Illuminate\Contracts\Cache\Repository;
@@ -44,22 +44,22 @@ class LookupController extends AdminController
     /**
      * Return the selected entries.
      *
-     * @param ValueTreeBuilder $tree
-     * @param                  $key
+     * @param ValueTableBuilder $table
+     * @param                   $key
      * @return null|string
      */
-    public function selected(ValueTreeBuilder $tree, $key)
+    public function selected(ValueTableBuilder $table, $key)
     {
         /* @var Collection $config */
         $config = $this->dispatch(new GetConfiguration($key));
 
-        $tree
+        $table
             ->setConfig($config)
             ->setModel($config->get('related'))
             ->setSelected($this->request->get('uploaded'));
 
-        $this->dispatch(new HydrateValueTree($tree));
+        $this->dispatch(new HydrateValueTable($table));
 
-        return $tree->build()->response()->getTreeContent();
+        return $table->build()->response()->getTableContent();
     }
 }

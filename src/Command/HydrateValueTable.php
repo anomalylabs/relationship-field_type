@@ -1,39 +1,39 @@
 <?php namespace Anomaly\RelationshipFieldType\Command;
 
-use Anomaly\RelationshipFieldType\Tree\ValueTreeBuilder;
+use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
 use Anomaly\Streams\Platform\Support\Hydrator;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
 /**
- * Class HydrateValueTree
+ * Class HydrateValueTable
  *
  * @link          http://pyrocms.com/
  * @author        PyroCMS, Inc. <support@pyrocms.com>
  * @author        Ryan Thompson <ryan@pyrocms.com>
  * @package       Anomaly\RelationshipFieldType\Command
  */
-class HydrateValueTree implements SelfHandling
+class HydrateValueTable implements SelfHandling
 {
 
     use DispatchesJobs;
 
     /**
-     * The value tree.
+     * The value table.
      *
-     * @var ValueTreeBuilder
+     * @var ValueTableBuilder
      */
-    protected $tree;
+    protected $table;
 
     /**
-     * Create a new HydrateValueTree instance.
+     * Create a new HydrateValueTable instance.
      *
-     * @param ValueTreeBuilder $tree
+     * @param ValueTableBuilder $table
      */
-    public function __construct(ValueTreeBuilder $tree)
+    public function __construct(ValueTableBuilder $table)
     {
-        $this->tree = $tree;
+        $this->table = $table;
     }
 
     /**
@@ -43,10 +43,10 @@ class HydrateValueTree implements SelfHandling
      */
     public function handle(Hydrator $hydrator)
     {
-        if (!$definition = $this->dispatch(new GetValueDefinition($this->tree))) {
+        if (!$definition = $this->dispatch(new GetValueDefinition($this->table))) {
             return;
         }
 
-        $hydrator->hydrate($this->tree, $definition);
+        $hydrator->hydrate($this->table, $definition);
     }
 }
