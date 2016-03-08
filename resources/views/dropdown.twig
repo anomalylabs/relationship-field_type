@@ -4,8 +4,8 @@
         {{ field_type.disabled ? 'disabled' }}
         {{ field_type.readonly ? 'readonly' }}>
 
-    {% if not field_type.required %}
-        <option>{{ trans(field_type.placeholder) }}</option>
+    {% if field_type.placeholder %}
+        <option value="">{{ trans(field_type.placeholder) }}</option>
     {% endif %}
 
     {% for value, title in field_type.options %}
