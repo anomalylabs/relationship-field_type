@@ -85,7 +85,7 @@ class RelationshipFieldType extends FieldType
      * Create a new RelationshipFieldType instance.
      *
      * @param Repository $cache
-     * @param Container  $container
+     * @param Container $container
      */
     public function __construct(Repository $cache, Container $container)
     {
@@ -201,7 +201,7 @@ class RelationshipFieldType extends FieldType
      */
     public function getPlaceholder()
     {
-        return ($this->placeholder !== null) ? $this->placeholder : 'anomaly.field_type.relationship::input.placeholder';
+        return is_null($this->placeholder) ? 'anomaly.field_type.relationship::input.placeholder' : $this->placeholder;
     }
 
     /**
