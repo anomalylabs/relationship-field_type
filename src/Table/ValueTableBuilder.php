@@ -1,7 +1,6 @@
 <?php namespace Anomaly\RelationshipFieldType\Table;
 
 use Anomaly\RelationshipFieldType\RelationshipFieldType;
-use Anomaly\Streams\Platform\Model\EloquentModel;
 use Anomaly\Streams\Platform\Support\Collection;
 use Anomaly\Streams\Platform\Ui\Table\TableBuilder;
 use Illuminate\Database\Eloquent\Builder;
@@ -70,12 +69,9 @@ class ValueTableBuilder extends TableBuilder
      */
     public function onQuerying(Builder $query)
     {
-        $fieldType = $this->getFieldType();
+        $model = $this->getTableModel();
 
-        /* @var EloquentModel $related */
-        $related = $fieldType->getRelatedModel();
-
-        $query->where($related->getTableName() . '.id', $this->getSelected() ?: 0);
+        $query->where($model->getTableName() . '.id', $this->getSelected() ?: 0);
     }
 
     /**
