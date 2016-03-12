@@ -85,7 +85,7 @@ class RelationshipFieldType extends FieldType
      * Create a new RelationshipFieldType instance.
      *
      * @param Repository $cache
-     * @param Container $container
+     * @param Container  $container
      */
     public function __construct(Repository $cache, Container $container)
     {
@@ -128,6 +128,7 @@ class RelationshipFieldType extends FieldType
         return $table
             ->setConfig(new Collection($this->getConfig()))
             ->setModel($this->config('related'))
+            ->setFieldType($this)
             ->setSelected($value)
             ->build()
             ->response()

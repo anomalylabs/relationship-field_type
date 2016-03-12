@@ -1,6 +1,7 @@
 <?php namespace Anomaly\RelationshipFieldType\Table;
 
 use Anomaly\RelationshipFieldType\RelationshipFieldType;
+use Anomaly\Streams\Platform\Model\EloquentModel;
 use Anomaly\Streams\Platform\Support\Collection;
 use Anomaly\Streams\Platform\Ui\Table\TableBuilder;
 use Illuminate\Database\Eloquent\Builder;
@@ -69,30 +70,12 @@ class ValueTableBuilder extends TableBuilder
      */
     public function onQuerying(Builder $query)
     {
-        $uploaded = $this->getSelected();
+        $fieldType = $this->getFieldType();
 
-        if ($fieldType = $this->getFieldType()) {
+        /* @var EloquentModel $related */
+        $related = $fieldType->getRelatedModel();
 
-            /**
-             * If we have the entry available then
-             * we can determine saved sort order.
-             */
-            $entry   = $fieldType->getEntry();
-            $table   = $fieldType->getPivotTableName();
-            $related = $fieldType->getRelatedModel();
-
-            $query->join($table, $table . '.related_id', '=', $related->getTableName() . '.id');
-            $query->where($table . '.entry_id', $entry->getId());
-            $query->orderBy($table . '.sort_order', 'ASC');
-        } else {
-
-            /**
-             * If all we have is ID then just use that.
-             * The JS / UI will be handling the sort
-             * order at this time.
-             */
-            $query->where('id', $uploaded ?: 0);
-        }
+        $query->where($related->getTableName() . '.id', $this->getSelected() ?: 0);
     }
 
     /**
