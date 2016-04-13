@@ -12,7 +12,9 @@ $(function () {
 
             e.preventDefault();
 
-            wrapper.find('.selected').load('/streams/relationship-field_type/selected/' + $(this).data('key') + '?uploaded=' + $(this).data('entry'));
+            wrapper.find('.selected').load('/streams/relationship-field_type/selected/' + $(this).data('key') + '?uploaded=' + $(this).data('entry'), function () {
+                modal.modal('hide');
+            });
 
             $('[name="' + field + '"]').val($(this).data('entry'));
 
