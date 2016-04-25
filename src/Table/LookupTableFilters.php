@@ -24,6 +24,9 @@ class LookupTableFilters implements SelfHandling
         $filter = $stream->getTitleColumn();
 
         if ($filter == 'id') {
+
+            $builder->setFilters([]);
+
             return;
         }
 

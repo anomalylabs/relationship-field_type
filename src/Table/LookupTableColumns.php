@@ -24,6 +24,9 @@ class LookupTableColumns implements SelfHandling
         $column = $stream->getTitleColumn();
 
         if ($column == 'id') {
+
+            $builder->setColumns([]);
+
             return;
         }
 
