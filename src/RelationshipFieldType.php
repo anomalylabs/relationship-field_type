@@ -94,6 +94,22 @@ class RelationshipFieldType extends FieldType
     }
 
     /**
+     * Get the ID of the value.
+     *
+     * @return int|null
+     */
+    public function id()
+    {
+        $value = $value = $this->getValue();
+
+        if ($value instanceof EloquentModel) {
+            return $value->getId();
+        }
+
+        return $value;
+    }
+
+    /**
      * Return the config key.
      *
      * @return string
