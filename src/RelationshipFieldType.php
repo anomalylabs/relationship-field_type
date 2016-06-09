@@ -32,6 +32,13 @@ class RelationshipFieldType extends FieldType
     protected $columnType = 'integer';
 
     /**
+     * The input view.
+     *
+     * @var null|string
+     */
+    protected $inputView = null;
+
+    /**
      * The filter view.
      *
      * @var string
@@ -218,7 +225,11 @@ class RelationshipFieldType extends FieldType
      */
     public function getPlaceholder()
     {
-        return is_null($this->placeholder) ? 'anomaly.field_type.relationship::input.placeholder' : $this->placeholder;
+        if (!$this->placeholder && !$this->isRequired()) {
+            return 'anomaly.field_type.relationship::input.placeholder';
+        }
+
+        return $this->placeholder;
     }
 
     /**
@@ -228,6 +239,10 @@ class RelationshipFieldType extends FieldType
      */
     public function getInputView()
     {
+        if ($view = parent::getInputView()) {
+            return $view;
+        }
+
         return 'anomaly.field_type.relationship::' . $this->config('mode');
     }
 
