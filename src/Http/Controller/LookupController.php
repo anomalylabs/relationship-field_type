@@ -60,6 +60,6 @@ class LookupController extends AdminController
 
         $this->dispatch(new HydrateValueTable($table));
 
-        return $table->build()->response()->getTableContent();
+        return $table->build()->load()->getTableContent();
     }
 }
