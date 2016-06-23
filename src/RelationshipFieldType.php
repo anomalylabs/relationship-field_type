@@ -154,7 +154,7 @@ class RelationshipFieldType extends FieldType
             ->setFieldType($this)
             ->setSelected($value)
             ->build()
-            ->response()
+            ->load()
             ->getTableContent();
     }
 
