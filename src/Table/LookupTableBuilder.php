@@ -29,13 +29,33 @@ class LookupTableBuilder extends TableBuilder
     protected $ajax = true;
 
     /**
+     * The table filters.
+     *
+     * @var string
+     */
+    protected $filters = LookupTableFilters::class;
+
+    /**
+     * The table columns.
+     *
+     * @var string
+     */
+    protected $columns = LookupTableColumns::class;
+
+    /**
+     * The table buttons.
+     *
+     * @var string
+     */
+    protected $buttons = LookupTableButtons::class;
+
+    /**
      * The table options.
      *
      * @var array
      */
     protected $options = [
-        'enable_views' => false,
-        'title'        => 'anomaly.field_type.relationship::message.choose_entry'
+        'title' => 'anomaly.field_type.relationship::message.choose_entry'
     ];
 
     /**

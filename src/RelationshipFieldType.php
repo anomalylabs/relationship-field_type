@@ -139,23 +139,28 @@ class RelationshipFieldType extends FieldType
      */
     public function table()
     {
-        /* @var ValueTableBuilder $table */
-        $table = $this->container->make(ValueTableBuilder::class);
-
-        $value = $this->getValue();
+        $value   = $this->getValue();
+        $related = $this->getRelatedModel();
 
         if ($value instanceof EntryInterface) {
             $value = $value->getId();
         }
 
-        return $table
-            ->setConfig(new Collection($this->getConfig()))
-            ->setModel($this->config('related'))
+        if ($table = $this->config('value_table')) {
+            $table = $this->container->make($table);
+        } else {
+            $table = $related->newRelationshipFieldTypeValueTableBuilder();
+        }
+
+        /* @var ValueTableBuilder $table */
+        $table->setConfig(new Collection($this->getConfig()))
+            ->setModel($related)
             ->setFieldType($this)
             ->setSelected($value)
             ->build()
-            ->load()
-            ->getTableContent();
+            ->load();
+
+        return $table->getTableContent();
     }
 
     /**
