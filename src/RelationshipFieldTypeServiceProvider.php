@@ -1,6 +1,7 @@
 <?php namespace Anomaly\RelationshipFieldType;
 
 use Anomaly\RelationshipFieldType\Command\GetLookupTable;
+use Anomaly\RelationshipFieldType\Handler\Related;
 use Anomaly\RelationshipFieldType\Table\LookupTableBuilder;
 use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
 use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
@@ -72,6 +73,21 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
                 }
 
                 return $container->make(ValueTableBuilder::class);
+            }
+        );
+
+        $model->bind(
+            'get_relationship_field_type_options_handler',
+            function () {
+
+                /* @var EntryInterface $this */
+                $handler = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\OptionsHandler';
+
+                if (class_exists($handler)) {
+                    return $handler;
+                }
+
+                return Related::class;
             }
         );
     }
