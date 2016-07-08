@@ -4,6 +4,7 @@ use Anomaly\RelationshipFieldType\Command\GetLookupTable;
 use Anomaly\RelationshipFieldType\Table\LookupTableBuilder;
 use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
 use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
+use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 use Anomaly\Streams\Platform\Entry\EntryModel;
 use Illuminate\Contracts\Container\Container;
 
@@ -48,6 +49,7 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
             'new_relationship_field_type_lookup_table_builder',
             function (Container $container) {
 
+                /* @var EntryInterface $this */
                 $builder = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\LookupTableBuilder';
 
                 if (class_exists($builder)) {
@@ -62,6 +64,7 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
             'new_relationship_field_type_value_table_builder',
             function (Container $container) {
 
+                /* @var EntryInterface $this */
                 $builder = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\ValueTableBuilder';
 
                 if (class_exists($builder)) {
