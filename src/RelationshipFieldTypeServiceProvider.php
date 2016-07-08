@@ -38,7 +38,7 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
     ];
 
     /**
-     * Register the addons.
+     * Register the addon.
      *
      * @param EntryModel $model
      */
