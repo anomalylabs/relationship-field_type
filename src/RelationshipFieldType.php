@@ -63,8 +63,7 @@ class RelationshipFieldType extends FieldType
      * @var array
      */
     protected $config = [
-        'handler' => 'related',
-        'mode'    => 'dropdown'
+        'mode' => 'dropdown'
     ];
 
     /**
