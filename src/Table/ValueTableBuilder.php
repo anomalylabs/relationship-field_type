@@ -57,6 +57,7 @@ class ValueTableBuilder extends TableBuilder
      */
     protected $options = [
         'limit'          => 1,
+        'sortable'       => false,
         'enable_views'   => false,
         'enable_headers' => false,
         'table_view'     => 'anomaly.field_type.relationship::table/table'
