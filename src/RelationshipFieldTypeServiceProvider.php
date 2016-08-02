@@ -6,7 +6,7 @@ use Anomaly\RelationshipFieldType\Table\LookupTableBuilder;
 use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
 use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
 use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
-use Anomaly\Streams\Platform\Entry\EntryModel;
+use Anomaly\Streams\Platform\Model\EloquentModel;
 use Illuminate\Contracts\Container\Container;
 
 /**
@@ -42,19 +42,21 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
     /**
      * Register the addon.
      *
-     * @param EntryModel $model
+     * @param EloquentModel $model
      */
-    public function register(EntryModel $model)
+    public function register(EloquentModel $model)
     {
         $model->bind(
             'new_relationship_field_type_lookup_table_builder',
             function (Container $container) {
 
-                /* @var EntryInterface $this */
-                $builder = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\LookupTableBuilder';
+                if ($this instanceof EntryInterface) {
 
-                if (class_exists($builder)) {
-                    return $container->make($builder);
+                    $builder = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\LookupTableBuilder';
+
+                    if (class_exists($builder)) {
+                        return $container->make($builder);
+                    }
                 }
 
                 return $container->make(LookupTableBuilder::class);
@@ -65,11 +67,13 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
             'new_relationship_field_type_value_table_builder',
             function (Container $container) {
 
-                /* @var EntryInterface $this */
-                $builder = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\ValueTableBuilder';
+                if ($this instanceof EntryInterface) {
 
-                if (class_exists($builder)) {
-                    return $container->make($builder);
+                    $builder = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\ValueTableBuilder';
+
+                    if (class_exists($builder)) {
+                        return $container->make($builder);
+                    }
                 }
 
                 return $container->make(ValueTableBuilder::class);
@@ -80,11 +84,13 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
             'get_relationship_field_type_options_handler',
             function () {
 
-                /* @var EntryInterface $this */
-                $handler = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\OptionsHandler';
+                if ($this instanceof EntryInterface) {
 
-                if (class_exists($handler)) {
-                    return $handler;
+                    $handler = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\OptionsHandler';
+
+                    if (class_exists($handler)) {
+                        return $handler;
+                    }
                 }
 
                 return Related::class;
