@@ -10,7 +10,6 @@ use Anomaly\Streams\Platform\Stream\Contract\StreamRepositoryInterface;
  * @link          http://pyrocms.com/
  * @author        PyroCMS, Inc. <support@pyrocms.com>
  * @author        Ryan Thompson <ryan@pyrocms.com>
- * @package       Anomaly\RelationshipFieldType
  */
 class Fields
 {
@@ -18,9 +17,9 @@ class Fields
     /**
      * Handle the options.
      *
-     * @param RelationshipFieldType     $fieldType
-     * @param FieldRepositoryInterface  $fields
-     * @param StreamRepositoryInterface $streams
+     * @param  RelationshipFieldType     $fieldType
+     * @param  FieldRepositoryInterface  $fields
+     * @param  StreamRepositoryInterface $streams
      * @return array
      */
     public function handle(
@@ -44,8 +43,8 @@ class Fields
 
         $fieldType->setOptions(
             array_combine(
-                $fields->lists('id')->toArray(),
-                $fields->lists('name')->toArray()
+                $fields->pluck('id')->toArray(),
+                $fields->pluck('name')->toArray()
             )
         );
     }

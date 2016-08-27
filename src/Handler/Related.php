@@ -8,7 +8,6 @@ use Anomaly\RelationshipFieldType\RelationshipFieldType;
  * @link          http://pyrocms.com/
  * @author        PyroCMS, Inc. <support@pyrocms.com>
  * @author        Ryan Thompson <ryan@pyrocms.com>
- * @package       Anomaly\RelationshipFieldType
  */
 class Related
 {
@@ -16,7 +15,7 @@ class Related
     /**
      * Handle the options.
      *
-     * @param RelationshipFieldType $fieldType
+     * @param  RelationshipFieldType $fieldType
      * @return array
      */
     public function handle(RelationshipFieldType $fieldType)
@@ -26,7 +25,7 @@ class Related
         $query = $model->newQuery();
 
         $fieldType->setOptions(
-            $query->get()->lists(
+            $query->get()->pluck(
                 $model->getTitleName(),
                 $model->getKeyName()
             )->all()

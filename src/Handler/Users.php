@@ -9,7 +9,6 @@ use Anomaly\UsersModule\User\Contract\UserRepositoryInterface;
  * @link          http://pyrocms.com/
  * @author        PyroCMS, Inc. <support@pyrocms.com>
  * @author        Ryan Thompson <ryan@pyrocms.com>
- * @package       Anomaly\RelationshipFieldType
  */
 class Users
 {
@@ -17,7 +16,7 @@ class Users
     /**
      * Handle the options.
      *
-     * @param RelationshipFieldType $fieldType
+     * @param  RelationshipFieldType $fieldType
      * @return array
      */
     public function handle(RelationshipFieldType $fieldType, UserRepositoryInterface $users)
@@ -25,7 +24,7 @@ class Users
         $users = $users->all();
 
         $fieldType->setOptions(
-            $users->lists(
+            $users->pluck(
                 'email',
                 'id'
             )->all()
