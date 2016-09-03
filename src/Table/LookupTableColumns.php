@@ -1,16 +1,6 @@
 <?php namespace Anomaly\RelationshipFieldType\Table;
 
-use Illuminate\Contracts\Bus\SelfHandling;
-
-/**
- * Class LookupTableColumns
- *
- * @link          http://pyrocms.com/
- * @author        PyroCMS, Inc. <support@pyrocms.com>
- * @author        Ryan Thompson <ryan@pyrocms.com>
- * @package       Anomaly\RelationshipFieldType\Table
- */
-class LookupTableColumns implements SelfHandling
+class LookupTableColumns
 {
 
     /**
@@ -24,7 +14,6 @@ class LookupTableColumns implements SelfHandling
         $column = $stream->getTitleColumn();
 
         if ($column == 'id') {
-
             $builder->setColumns([]);
 
             return;
@@ -32,7 +21,7 @@ class LookupTableColumns implements SelfHandling
 
         $builder->setColumns(
             [
-                $column
+                $column,
             ]
         );
     }

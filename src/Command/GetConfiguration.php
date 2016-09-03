@@ -1,18 +1,9 @@
 <?php namespace Anomaly\RelationshipFieldType\Command;
 
 use Anomaly\Streams\Platform\Support\Collection;
-use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Cache\Repository;
 
-/**
- * Class GetConfiguration
- *
- * @link          http://pyrocms.com/
- * @author        PyroCMS, Inc. <support@pyrocms.com>
- * @author        Ryan Thompson <ryan@pyrocms.com>
- * @package       Anomaly\RelationshipFieldType\Command
- */
-class GetConfiguration implements SelfHandling
+class GetConfiguration
 {
 
     /**
@@ -35,7 +26,7 @@ class GetConfiguration implements SelfHandling
     /**
      * Handle the command.
      *
-     * @param Repository $cache
+     * @param  Repository $cache
      * @return Collection
      */
     public function handle(Repository $cache)

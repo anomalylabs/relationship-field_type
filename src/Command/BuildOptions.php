@@ -2,17 +2,8 @@
 
 use Anomaly\RelationshipFieldType\RelationshipFieldType;
 use Illuminate\Container\Container;
-use Illuminate\Contracts\Bus\SelfHandling;
 
-/**
- * Class BuildOptions
- *
- * @link          http://pyrocms.com/
- * @author        PyroCMS, Inc. <support@pyrocms.com>
- * @author        Ryan Thompson <ryan@pyrocms.com>
- * @package       Anomaly\RelationshipFieldType\Command
- */
-class BuildOptions implements SelfHandling
+class BuildOptions
 {
 
     /**
@@ -27,7 +18,7 @@ class BuildOptions implements SelfHandling
      *
      * @param RelationshipFieldType $fieldType
      */
-    function __construct(RelationshipFieldType $fieldType)
+    public function __construct(RelationshipFieldType $fieldType)
     {
         $this->fieldType = $fieldType;
     }

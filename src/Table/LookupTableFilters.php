@@ -1,16 +1,6 @@
 <?php namespace Anomaly\RelationshipFieldType\Table;
 
-use Illuminate\Contracts\Bus\SelfHandling;
-
-/**
- * Class LookupTableFilters
- *
- * @link          http://pyrocms.com/
- * @author        PyroCMS, Inc. <support@pyrocms.com>
- * @author        Ryan Thompson <ryan@pyrocms.com>
- * @package       Anomaly\RelationshipFieldType\Table
- */
-class LookupTableFilters implements SelfHandling
+class LookupTableFilters
 {
 
     /**
@@ -24,7 +14,6 @@ class LookupTableFilters implements SelfHandling
         $filter = $stream->getTitleColumn();
 
         if ($filter == 'id') {
-
             $builder->setFilters([]);
 
             return;
@@ -34,9 +23,9 @@ class LookupTableFilters implements SelfHandling
             [
                 'search' => [
                     'fields' => [
-                        $filter
-                    ]
-                ]
+                        $filter,
+                    ],
+                ],
             ]
         );
     }
