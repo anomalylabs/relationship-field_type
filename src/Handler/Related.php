@@ -26,8 +26,8 @@ class Related
 
         $fieldType->setOptions(
             $query->get()->pluck(
-                $model->getTitleName(),
-                $model->getKeyName()
+                $fieldType->config('title_name', $model->getTitleName()),
+                $fieldType->config('key_name', $model->getKeyName())
             )->all()
         );
     }
