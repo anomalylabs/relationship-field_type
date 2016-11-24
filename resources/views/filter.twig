@@ -1,4 +1,6 @@
-<select class="{{ field_type.class }}" name="{{ field_type.input_name }}">
+<select
+        class="custom-select form-control"
+        name="{{ field_type.input_name }}">
 
     <option value="" disabled {{ not field_type.value ? 'selected' }}>{{ trans(field_type.placeholder) }}</option>
 
