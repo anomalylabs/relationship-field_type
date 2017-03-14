@@ -33,7 +33,8 @@ return [
         'config'   => [
             'options' => [
                 'dropdown' => 'anomaly.field_type.relationship::config.mode.option.dropdown',
-                'lookup'   => 'anomaly.field_type.relationship::config.mode.option.lookup'
+                'lookup'   => 'anomaly.field_type.relationship::config.mode.option.lookup',
+                'search'   => 'anomaly.field_type.relationship::config.mode.option.search',
             ]
         ]
     ]
