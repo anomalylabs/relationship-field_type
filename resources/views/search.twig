@@ -4,7 +4,6 @@
 {{ asset_add("scripts.js", "anomaly.field_type.relationship::js/search.js") }}
 
 <select
-        class="select2"
         name="{{ field_type.input_name }}"
         {{ html_attributes(field_type.attributes) }}
         {{ field_type.disabled ? 'disabled' }}
