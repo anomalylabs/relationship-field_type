@@ -1,7 +1,7 @@
 $(document).on('ajaxComplete ready', function () {
 
     // Initialize relationship pickers
-    $('[data-provides="anomaly.field_type.relationship"]:not([data-initialized])').each(function () {
+    $('input[data-provides="anomaly.field_type.relationship"]:not([data-initialized])').each(function () {
 
         $(this).attr('data-initialized', '');
 
