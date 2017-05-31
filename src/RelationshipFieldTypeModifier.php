@@ -34,7 +34,7 @@ class RelationshipFieldTypeModifier extends FieldTypeModifier
             return $value->getId();
         }
 
-        return (int)$value;
+        return $value === null ? $value : (int)$value;
     }
 
     /**
