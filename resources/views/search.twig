@@ -1,6 +1,11 @@
+{{ asset_add("styles.css", "anomaly.field_type.relationship::scss/select2.min.scss") }}
+{{ asset_add("styles.css", "anomaly.field_type.relationship::scss/overrides.scss") }}
+{{ asset_add("scripts.js", "anomaly.field_type.relationship::js/select2.full.min.js") }}
+{{ asset_add("scripts.js", "anomaly.field_type.relationship::js/search.js") }}
+
 <select
-        class="{{ field_type.class }}"
         name="{{ field_type.input_name }}"
+        {{ html_attributes(field_type.attributes) }}
         {{ field_type.disabled ? 'disabled' }}
         {{ field_type.readonly ? 'readonly' }}>
 
@@ -21,4 +26,3 @@
     {% endfor %}
 
 </select>
-

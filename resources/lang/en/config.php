@@ -8,7 +8,8 @@ return [
         'label'  => 'Input Mode',
         'option' => [
             'dropdown' => 'Dropdown',
-            'lookup'   => 'Lookup'
+            'lookup'   => 'Lookup',
+            'search'   => 'Search'
         ]
     ]
 ];
