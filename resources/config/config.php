@@ -1,6 +1,6 @@
 <?php
 
-use Anomaly\MultipleFieldType\Support\Config\StreamsOptions;
+use Anomaly\RelationshipFieldType\Support\Config\StreamsOptions;
 
 return [
     'related' => [
