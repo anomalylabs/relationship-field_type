@@ -3,7 +3,7 @@
     <tr id="{{ loop.index }}">
 
         {% for column in row.columns %}
-            <td class="{{ column.class }}" {{ column.attributes }}>
+            <td class="{{ column.class }}" {{ html_attributes(column.attributes) }}>
                 {{ column.value|raw }}
             </td>
         {% endfor %}
