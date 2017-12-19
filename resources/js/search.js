@@ -1,13 +1,10 @@
-$(document).on('ajaxComplete ready', function () {
+(function (window, document) {
 
-    // Initialize tag inputs.
-    $('select[data-provides="anomaly.field_type.relationship"]:not([data-initialized])').each(function () {
+    let fields = Array.from(
+        document.querySelectorAll('select[data-provides="anomaly.field_type.relationship"].search')
+    );
 
-        $(this)
-            .attr('data-initialized', '')
-            .select2({
-                containerCssClass: 'form-control custom-select select2-override',
-                dropdownCssClass: 'select2-option-override'
-            });
+    fields.forEach(function (field) {
+        new Choices(field);
     });
-});
+})(window, document);
