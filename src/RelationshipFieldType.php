@@ -7,6 +7,7 @@ use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 use Anomaly\Streams\Platform\Model\EloquentModel;
 use Anomaly\Streams\Platform\Support\Collection;
 use Anomaly\Streams\Platform\Stream\Command\GetStream;
+use Anomaly\Streams\Platform\Stream\Contract\StreamInterface;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
