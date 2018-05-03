@@ -68,7 +68,7 @@ class ValueTableBuilder extends TableBuilder
      */
     public function onReady()
     {
-        if (isset($this->getFieldType()->disabled) && isset($this->buttons['remove'])) {
+        if ($this->fieldType && $this->fieldType->isDisabled() && isset($this->buttons['remove'])) {
             unset($this->buttons['remove']);
         }
     }
