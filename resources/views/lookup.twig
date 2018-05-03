@@ -1,14 +1,16 @@
-{{ asset_add('styles.css', 'anomaly.field_type.relationship::less/lookup.less') }}
-{{ asset_add('scripts.js', 'anomaly.field_type.relationship::js/lookup.js') }}
+{% if not field_type.disabled %}
+    {{ asset_add('styles.css', 'anomaly.field_type.relationship::less/lookup.less') }}
+    {{ asset_add('scripts.js', 'anomaly.field_type.relationship::js/lookup.js') }}
 
-<a
-        data-toggle="modal"
-        data-target="#{{ field_type.field_name }}-modal"
-        class="btn btn-success btn-xs"
-        href="{{ url('streams/relationship-field_type/index/' ~ field_type.key) }}"
->
-    {{ icon('search') }}
-    {{ trans('streams::button.select') }}</a>
+    <a
+            data-toggle="modal"
+            data-target="#{{ field_type.field_name }}-modal"
+            class="btn btn-success btn-xs"
+            href="{{ url('streams/relationship-field_type/index/' ~ field_type.key) }}"
+    >
+        {{ icon('search') }}
+        {{ trans('streams::button.select') }}</a>
+{% endif %}
 
 <input
         type="hidden"

@@ -64,6 +64,16 @@ class ValueTableBuilder extends TableBuilder
     ];
 
     /**
+     * Fired just before build.
+     */
+    public function onReady()
+    {
+        if ($this->fieldType && $this->fieldType->isDisabled() && isset($this->buttons['remove'])) {
+            unset($this->buttons['remove']);
+        }
+    }
+
+    /**
      * Fired just before querying.
      *
      * @param Builder $query
