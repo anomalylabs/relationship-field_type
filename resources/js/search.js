@@ -5,6 +5,8 @@
     );
 
     fields.forEach(function (field) {
-        new Choices(field);
+        new Choices(field, {
+            shouldSort: false,
+        });
     });
 })(window, document);
