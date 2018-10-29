@@ -3,14 +3,14 @@
 use Anomaly\RelationshipFieldType\Support\Config\RelatedHandler;
 
 return [
-    'related' => [
+    'related'    => [
         'required' => true,
         'type'     => 'anomaly.field_type.select',
         'config'   => [
             'handler' => RelatedHandler::class,
         ],
     ],
-    'mode'    => [
+    'mode'       => [
         'required' => true,
         'type'     => 'anomaly.field_type.select',
         'config'   => [
@@ -19,6 +19,12 @@ return [
                 'lookup'   => 'anomaly.field_type.relationship::config.mode.option.lookup',
                 'search'   => 'anomaly.field_type.relationship::config.mode.option.search',
             ],
+        ],
+    ],
+    'title_name' => [
+        'type'   => 'anomaly.field_type.slug',
+        'config' => [
+            'type' => '_',
         ],
     ],
 ];

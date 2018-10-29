@@ -24,11 +24,20 @@ class Related
 
         $query = $model->newQuery();
 
-        $fieldType->setOptions(
-            $query->get()->pluck(
-                $fieldType->config('title_name', $model->getTitleName()),
-                $fieldType->config('key_name', $model->getKeyName())
-            )->all()
-        );
+        try {
+            $fieldType->setOptions(
+                $query->get()->pluck(
+                    $fieldType->config('title_name', $model->getTitleName()),
+                    $fieldType->config('key_name', $model->getKeyName())
+                )->all()
+            );
+        } catch (\Exception $e) {
+            $fieldType->setOptions(
+                $query->get()->pluck(
+                    $model->getTitleName(),
+                    $model->getKeyName()
+                )->all()
+            );
+        }
     }
 }
