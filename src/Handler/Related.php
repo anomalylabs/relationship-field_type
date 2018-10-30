@@ -24,7 +24,8 @@ class Related
     {
         $model = $fieldType->getRelatedModel();
 
-        $query = $model->newQuery();
+        $query   = $model->newQuery();
+        $results = $query->get();
 
         try {
 
@@ -33,7 +34,7 @@ class Related
              */
             if (strpos($fieldType->config('title_name', $model->getTitleName()), '{') === false) {
                 $fieldType->setOptions(
-                    $query->get()->pluck(
+                    $results->pluck(
                         $fieldType->config('title_name', $model->getTitleName()),
                         $fieldType->config('key_name', $model->getKeyName())
                     )->all()
@@ -44,9 +45,6 @@ class Related
              * Try and use a parsing pattern.
              */
             if (strpos($fieldType->config('title_name', $model->getTitleName()), '{') !== false) {
-
-                $results = $query->get();
-
                 $fieldType->setOptions(
                     array_combine(
                         $results->map(
@@ -64,7 +62,7 @@ class Related
             }
         } catch (\Exception $e) {
             $fieldType->setOptions(
-                $query->get()->pluck(
+                $results->pluck(
                     $model->getTitleName(),
                     $model->getKeyName()
                 )->all()
