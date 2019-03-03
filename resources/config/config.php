@@ -1,13 +1,11 @@
 <?php
 
-use Anomaly\RelationshipFieldType\Support\Config\RelatedHandler;
-
 return [
     'related'    => [
         'required' => true,
         'type'     => 'anomaly.field_type.select',
         'config'   => [
-            'handler' => RelatedHandler::class,
+            'handler' => \Anomaly\RelationshipFieldType\Support\Config\RelatedHandler::class,
         ],
     ],
     'mode'       => [
