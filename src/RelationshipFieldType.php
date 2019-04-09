@@ -157,7 +157,13 @@ class RelationshipFieldType extends FieldType
         $table->setConfig(new Collection($this->getConfig()))
             ->setModel($related)
             ->setFieldType($this)
-            ->setSelected($value)
+            ->setSelected($value);
+
+        if ($this->isDisabled() || $this->isReadonly()) {
+            $table->setButtons([]);
+        }
+
+        $table
             ->build()
             ->load();
 
