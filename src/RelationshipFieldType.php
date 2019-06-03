@@ -39,6 +39,13 @@ class RelationshipFieldType extends FieldType
      * @var null|string
      */
     protected $inputView = null;
+    
+    /**
+     * The input class.
+     *
+     * @var null
+     */
+    protected $class = null;
 
     /**
      * The filter view.
