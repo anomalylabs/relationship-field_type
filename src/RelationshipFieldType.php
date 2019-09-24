@@ -5,26 +5,20 @@ use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
 use Anomaly\Streams\Platform\Addon\FieldType\FieldType;
 use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 use Anomaly\Streams\Platform\Model\EloquentModel;
-use Anomaly\Streams\Platform\Support\Collection;
 use Anomaly\Streams\Platform\Stream\Command\GetStream;
 use Anomaly\Streams\Platform\Stream\Contract\StreamInterface;
-use Illuminate\Contracts\Cache\Repository;
-use Illuminate\Contracts\Container\Container;
+use Anomaly\Streams\Platform\Support\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 
 /**
  * Class RelationshipFieldType
  *
- * @link          http://pyrocms.com/
- * @author        PyroCMS, Inc. <support@pyrocms.com>
- * @author        Ryan Thompson <ryan@pyrocms.com>
- * @package       Anomaly\RelationshipFieldType
+ * @link   http://pyrocms.com/
+ * @author PyroCMS, Inc. <support@pyrocms.com>
+ * @author Ryan Thompson <ryan@pyrocms.com>
  */
 class RelationshipFieldType extends FieldType
 {
-
-    use DispatchesJobs;
 
     /**
      * The underlying database column type
@@ -39,7 +33,7 @@ class RelationshipFieldType extends FieldType
      * @var null|string
      */
     protected $inputView = null;
-    
+
     /**
      * The input class.
      *
@@ -63,7 +57,7 @@ class RelationshipFieldType extends FieldType
         'users'       => 'Anomaly\RelationshipFieldType\Handler\Users@handle',
         'fields'      => 'Anomaly\RelationshipFieldType\Handler\Fields@handle',
         'related'     => 'Anomaly\RelationshipFieldType\Handler\Related@handle',
-        'assignments' => 'Anomaly\RelationshipFieldType\Handler\Assignments@handle'
+        'assignments' => 'Anomaly\RelationshipFieldType\Handler\Assignments@handle',
     ];
 
     /**
@@ -72,7 +66,7 @@ class RelationshipFieldType extends FieldType
      * @var array
      */
     protected $config = [
-        'mode' => 'dropdown'
+        'mode' => 'dropdown',
     ];
 
     /**
@@ -81,32 +75,6 @@ class RelationshipFieldType extends FieldType
      * @var null|array
      */
     protected $options = null;
-
-    /**
-     * The cache repository.
-     *
-     * @var Repository
-     */
-    protected $cache;
-
-    /**
-     * The service container.
-     *
-     * @var Container
-     */
-    protected $container;
-
-    /**
-     * Create a new RelationshipFieldType instance.
-     *
-     * @param Repository $cache
-     * @param Container  $container
-     */
-    public function __construct(Repository $cache, Container $container)
-    {
-        $this->cache     = $cache;
-        $this->container = $container;
-    }
 
     /**
      * Get the ID of the value.
@@ -131,9 +99,11 @@ class RelationshipFieldType extends FieldType
      */
     public function key()
     {
-        $this->cache->put(
-            'anomaly/relationship-field_type::' . ($key = md5(json_encode($this->getConfig()))),
-            $this->getConfig(),
+        cache(
+            [
+                'anomaly/relationship-field_type::' . ($key = md5(json_encode($this->getConfig()))) =>
+                    $this->getConfig(),
+            ],
             30
         );
 
@@ -155,9 +125,9 @@ class RelationshipFieldType extends FieldType
         }
 
         if ($table = $this->config('value_table')) {
-            $table = $this->container->make($table);
+            $table = app($table);
         } else {
-            $table = $related->newRelationshipFieldTypeValueTableBuilder();
+            $table = $related->call('new_relationship_field_type_value_table_builder');
         }
 
         /* @var ValueTableBuilder $table */
@@ -201,7 +171,7 @@ class RelationshipFieldType extends FieldType
             return $stream->getEntryModel();
         }
 
-        return $this->container->make($model);
+        return app($model);
     }
 
     /**
@@ -268,7 +238,7 @@ class RelationshipFieldType extends FieldType
 
         return 'anomaly.field_type.relationship::' . $this->config('mode');
     }
-    
+
     /**
      * Get the class.
      *

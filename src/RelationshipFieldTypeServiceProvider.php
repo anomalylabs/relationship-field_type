@@ -1,21 +1,18 @@
 <?php namespace Anomaly\RelationshipFieldType;
 
-use Anomaly\RelationshipFieldType\Command\GetLookupTable;
 use Anomaly\RelationshipFieldType\Handler\Related;
 use Anomaly\RelationshipFieldType\Table\LookupTableBuilder;
 use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
 use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
 use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 use Anomaly\Streams\Platform\Model\EloquentModel;
-use Illuminate\Contracts\Container\Container;
 
 /**
  * Class RelationshipFieldTypeServiceProvider
  *
- * @link          http://pyrocms.com/
- * @author        PyroCMS, Inc. <support@pyrocms.com>
- * @author        Ryan Thompson <ryan@pyrocms.com>
- * @package       Anomaly\RelationshipFieldType
+ * @link   http://pyrocms.com/
+ * @author PyroCMS, Inc. <support@pyrocms.com>
+ * @author Ryan Thompson <ryan@pyrocms.com>
  */
 class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
 {
@@ -26,7 +23,7 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
      * @var array
      */
     protected $singletons = [
-        'Anomaly\RelationshipFieldType\RelationshipFieldTypeModifier' => 'Anomaly\RelationshipFieldType\RelationshipFieldTypeModifier'
+        RelationshipFieldTypeModifier::class => RelationshipFieldTypeModifier::class,
     ];
 
     /**
@@ -36,7 +33,7 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
      */
     protected $routes = [
         'streams/relationship-field_type/index/{key}'    => 'Anomaly\RelationshipFieldType\Http\Controller\LookupController@index',
-        'streams/relationship-field_type/selected/{key}' => 'Anomaly\RelationshipFieldType\Http\Controller\LookupController@selected'
+        'streams/relationship-field_type/selected/{key}' => 'Anomaly\RelationshipFieldType\Http\Controller\LookupController@selected',
     ];
 
     /**
@@ -48,35 +45,35 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
     {
         $model->bind(
             'new_relationship_field_type_lookup_table_builder',
-            function (Container $container) {
+            function () {
 
                 if ($this instanceof EntryInterface) {
 
                     $builder = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\LookupTableBuilder';
 
                     if (class_exists($builder)) {
-                        return $container->make($builder);
+                        return app($builder);
                     }
                 }
 
-                return $container->make(LookupTableBuilder::class);
+                return app(LookupTableBuilder::class);
             }
         );
 
         $model->bind(
             'new_relationship_field_type_value_table_builder',
-            function (Container $container) {
+            function () {
 
                 if ($this instanceof EntryInterface) {
 
                     $builder = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\ValueTableBuilder';
 
                     if (class_exists($builder)) {
-                        return $container->make($builder);
+                        return app($builder);
                     }
                 }
 
-                return $container->make(ValueTableBuilder::class);
+                return app(ValueTableBuilder::class);
             }
         );
 
@@ -97,5 +94,4 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
             }
         );
     }
-
 }

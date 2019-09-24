@@ -1,21 +1,17 @@
 <?php namespace Anomaly\RelationshipFieldType\Http\Controller;
 
 use Anomaly\RelationshipFieldType\Command\GetConfiguration;
-use Anomaly\RelationshipFieldType\Command\HydrateValueTable;
 use Anomaly\RelationshipFieldType\Table\LookupTableBuilder;
 use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
 use Anomaly\Streams\Platform\Http\Controller\AdminController;
 use Anomaly\Streams\Platform\Support\Collection;
-use Illuminate\Contracts\Cache\Repository;
-use Illuminate\Contracts\Container\Container;
 
 /**
  * Class LookupController
  *
- * @link          http://pyrocms.com/
- * @author        PyroCMS, Inc. <support@pyrocms.com>
- * @author        Ryan Thompson <ryan@pyrocms.com>
- * @package       Anomaly\RelationshipFieldType\Http\Controller
+ * @link   http://pyrocms.com/
+ * @author PyroCMS, Inc. <support@pyrocms.com>
+ * @author Ryan Thompson <ryan@pyrocms.com>
  */
 class LookupController extends AdminController
 {
@@ -23,19 +19,18 @@ class LookupController extends AdminController
     /**
      * Return an index of entries from related stream.
      *
-     * @param Container $container
-     * @param           $key
+     * @param $key
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(Container $container, $key)
+    public function index($key)
     {
         /* @var Collection $config */
-        $config = $this->dispatch(new GetConfiguration($key));
+        $config = dispatch_now(new GetConfiguration($key));
 
-        $related = $container->make($config->get('related'));
+        $related = app($config->get('related'));
 
         if ($table = $config->get('lookup_table')) {
-            $table = $container->make($table);
+            $table = app($table);
         } else {
             $table = $related->newRelationshipFieldTypeLookupTableBuilder();
         }
@@ -50,25 +45,24 @@ class LookupController extends AdminController
     /**
      * Return the selected entries.
      *
-     * @param Container $container
-     * @param           $key
+     * @param $key
      * @return null|string
      */
-    public function selected(Container $container, $key)
+    public function selected($key)
     {
         /* @var Collection $config */
-        $config = $this->dispatch(new GetConfiguration($key));
+        $config = dispatch_now(new GetConfiguration($key));
 
-        $related = $container->make($config->get('related'));
+        $related = app($config->get('related'));
 
         if ($table = $config->get('value_table')) {
-            $table = $container->make($table);
+            $table = app($table);
         } else {
             $table = $related->newRelationshipFieldTypeValueTableBuilder();
         }
 
         /* @var ValueTableBuilder $table */
-        $table->setSelected($this->request->get('uploaded'))
+        $table->setSelected(request('uploaded'))
             ->setConfig($config)
             ->setModel($related)
             ->build()
