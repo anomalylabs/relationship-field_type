@@ -142,6 +142,26 @@ class RelationshipFieldType extends FieldType
     }
 
     /**
+     * Get the related model.
+     *
+     * @return EloquentModel
+     */
+    public function getRelatedModel()
+    {
+        $model = $this->config('related');
+
+        if (strpos($model, '.')) {
+
+            /* @var StreamInterface $stream */
+            $stream = dispatch_now(new GetStream($model));
+
+            return $stream->getEntryModel();
+        }
+
+        return app($model);
+    }
+
+    /**
      * Get the relation.
      *
      * @return BelongsTo
@@ -155,23 +175,13 @@ class RelationshipFieldType extends FieldType
     }
 
     /**
-     * Get the related model.
+     * Get the database column name.
      *
-     * @return EloquentModel
+     * @return null|string
      */
-    public function getRelatedModel()
+    public function getColumnName()
     {
-        $model = $this->config('related');
-
-        if (strpos($model, '.')) {
-
-            /* @var StreamInterface $stream */
-            $stream = $this->dispatch(new GetStream($model));
-
-            return $stream->getEntryModel();
-        }
-
-        return app($model);
+        return parent::getColumnName() . '_id';
     }
 
     /**
@@ -182,7 +192,7 @@ class RelationshipFieldType extends FieldType
     public function getOptions()
     {
         if ($this->options === null) {
-            $this->dispatch(new BuildOptions($this));
+            dispatch_now(new BuildOptions($this));
         }
 
         return $this->options;
@@ -255,16 +265,6 @@ class RelationshipFieldType extends FieldType
         }
 
         return 'form-control';
-    }
-
-    /**
-     * Get the database column name.
-     *
-     * @return null|string
-     */
-    public function getColumnName()
-    {
-        return parent::getColumnName() . '_id';
     }
 
     /**

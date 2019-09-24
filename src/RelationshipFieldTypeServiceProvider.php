@@ -46,9 +46,7 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
         $model->bind(
             'new_relationship_field_type_lookup_table_builder',
             function () {
-
                 if ($this instanceof EntryInterface) {
-
                     $builder = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\LookupTableBuilder';
 
                     if (class_exists($builder)) {
@@ -63,9 +61,7 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
         $model->bind(
             'new_relationship_field_type_value_table_builder',
             function () {
-
                 if ($this instanceof EntryInterface) {
-
                     $builder = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\ValueTableBuilder';
 
                     if (class_exists($builder)) {
@@ -80,9 +76,7 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
         $model->bind(
             'get_relationship_field_type_options_handler',
             function () {
-
                 if ($this instanceof EntryInterface) {
-
                     $handler = $this->getBoundModelNamespace() . '\\Support\\RelationshipFieldType\\OptionsHandler';
 
                     if (class_exists($handler)) {

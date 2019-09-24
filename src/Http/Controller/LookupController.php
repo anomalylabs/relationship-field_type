@@ -27,9 +27,9 @@ class LookupController extends AdminController
         /* @var Collection $config */
         $config = dispatch_now(new GetConfiguration($key));
 
-        $related = app($config->get('related'));
+        $related = app(config('related'));
 
-        if ($table = $config->get('lookup_table')) {
+        if ($table = config('lookup_table')) {
             $table = app($table);
         } else {
             $table = $related->newRelationshipFieldTypeLookupTableBuilder();
@@ -53,9 +53,9 @@ class LookupController extends AdminController
         /* @var Collection $config */
         $config = dispatch_now(new GetConfiguration($key));
 
-        $related = app($config->get('related'));
+        $related = app(config('related'));
 
-        if ($table = $config->get('value_table')) {
+        if ($table = config('value_table')) {
             $table = app($table);
         } else {
             $table = $related->newRelationshipFieldTypeValueTableBuilder();

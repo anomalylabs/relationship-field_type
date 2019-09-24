@@ -56,7 +56,7 @@ class LookupTableBuilder extends TableBuilder
      */
     protected $options = [
         'sortable' => false,
-        'title'    => 'anomaly.field_type.relationship::message.choose_entry'
+        'title'    => 'anomaly.field_type.relationship::message.choose_entry',
     ];
 
     /**
@@ -68,7 +68,7 @@ class LookupTableBuilder extends TableBuilder
      */
     public function config($key, $default = null)
     {
-        return $this->config->get($key, $default);
+        return config($key, $default);
     }
 
     /**

@@ -4,7 +4,6 @@ use Anomaly\RelationshipFieldType\RelationshipFieldType;
 use Anomaly\Streams\Platform\Support\Collection;
 use Anomaly\Streams\Platform\Ui\Table\TableBuilder;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Class ValueTableBuilder
@@ -46,8 +45,8 @@ class ValueTableBuilder extends TableBuilder
     protected $buttons = [
         'remove' => [
             'data-dismiss' => 'relationship',
-            'data-entry'   => 'entry.id'
-        ]
+            'data-entry'   => 'entry.id',
+        ],
     ];
 
     /**
@@ -60,7 +59,7 @@ class ValueTableBuilder extends TableBuilder
         'sortable'       => false,
         'enable_views'   => false,
         'enable_headers' => false,
-        'table_view'     => 'anomaly.field_type.relationship::table/table'
+        'table_view'     => 'anomaly.field_type.relationship::table/table',
     ];
 
     /**
@@ -73,41 +72,6 @@ class ValueTableBuilder extends TableBuilder
         $model = $this->getTableModel();
 
         $query->where($model->getTableName() . '.id', $this->getSelected() ?: 0);
-    }
-
-    /**
-     * Return a config value.
-     *
-     * @param      $key
-     * @param null $default
-     * @return mixed
-     */
-    public function config($key, $default = null)
-    {
-        return $this->config->get($key, $default);
-    }
-
-    /**
-     * Get the config.
-     *
-     * @return Collection|null
-     */
-    public function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * Set the config.
-     *
-     * @param Collection $config
-     * @return $this
-     */
-    public function setConfig(Collection $config)
-    {
-        $this->config = $config;
-
-        return $this;
     }
 
     /**
@@ -134,24 +98,36 @@ class ValueTableBuilder extends TableBuilder
     }
 
     /**
-     * Get the field type.
+     * Return a config value.
      *
-     * @return RelationshipFieldType|null
+     * @param      $key
+     * @param null $default
+     * @return mixed
      */
-    public function getFieldType()
+    public function config($key, $default = null)
     {
-        return $this->fieldType;
+        return config($key, $default);
     }
 
     /**
-     * Set the field type.
+     * Get the config.
      *
-     * @param RelationshipFieldType $fieldType
+     * @return Collection|null
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * Set the config.
+     *
+     * @param Collection $config
      * @return $this
      */
-    public function setFieldType(RelationshipFieldType $fieldType)
+    public function setConfig(Collection $config)
     {
-        $this->fieldType = $fieldType;
+        $this->config = $config;
 
         return $this;
     }
@@ -173,5 +149,28 @@ class ValueTableBuilder extends TableBuilder
         }
 
         return parent::setTableEntries($entries);
+    }
+
+    /**
+     * Get the field type.
+     *
+     * @return RelationshipFieldType|null
+     */
+    public function getFieldType()
+    {
+        return $this->fieldType;
+    }
+
+    /**
+     * Set the field type.
+     *
+     * @param RelationshipFieldType $fieldType
+     * @return $this
+     */
+    public function setFieldType(RelationshipFieldType $fieldType)
+    {
+        $this->fieldType = $fieldType;
+
+        return $this;
     }
 }

@@ -31,7 +31,7 @@ class SetRelation
      * Create a new SetRelation instance.
      *
      * @param RelationshipFieldType $fieldType
-     * @param EloquentModel         $model
+     * @param EloquentModel $model
      */
     public function __construct(RelationshipFieldType $fieldType, EloquentModel $model)
     {

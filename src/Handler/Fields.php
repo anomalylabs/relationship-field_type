@@ -17,8 +17,8 @@ class Fields
     /**
      * Handle the options.
      *
-     * @param  RelationshipFieldType     $fieldType
-     * @param  FieldRepositoryInterface  $fields
+     * @param  RelationshipFieldType $fieldType
+     * @param  FieldRepositoryInterface $fields
      * @param  StreamRepositoryInterface $streams
      * @return array
      */

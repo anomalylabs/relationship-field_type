@@ -3,7 +3,6 @@
 use Anomaly\RelationshipFieldType\Command\SetRelation;
 use Anomaly\Streams\Platform\Addon\FieldType\FieldTypeModifier;
 use Anomaly\Streams\Platform\Model\EloquentModel;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 
 /**
  * Class RelationshipFieldTypeModifier
@@ -16,7 +15,6 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 class RelationshipFieldTypeModifier extends FieldTypeModifier
 {
 
-    use DispatchesJobs;
 
     /**
      * The field type instance.
@@ -35,8 +33,7 @@ class RelationshipFieldTypeModifier extends FieldTypeModifier
     public function modify($value)
     {
         if ($value instanceof EloquentModel) {
-
-            $this->dispatch(new SetRelation($this->fieldType, $value));
+            dispatch_now(new SetRelation($this->fieldType, $value));
 
             return $value->getId();
         }
