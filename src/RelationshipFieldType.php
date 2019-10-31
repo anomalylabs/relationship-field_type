@@ -118,7 +118,7 @@ class RelationshipFieldType extends FieldType
         $value = $value = $this->getValue();
 
         if ($value instanceof EloquentModel) {
-            return $value->getId();
+            return $value->id;
         }
 
         return $value;
