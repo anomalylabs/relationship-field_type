@@ -30,12 +30,12 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider implemen
     ];
 
     /**
-     * Register the addon.
-     *
-     * @param EloquentModel $model
+     * Boot the addon.
      */
-    public function register(EloquentModel $model)
+    public function boot()
     {
+        $model = app(EloquentModel::class);
+
         $model->bind(
             'new_relationship_field_type_lookup_table_builder',
             function () {
