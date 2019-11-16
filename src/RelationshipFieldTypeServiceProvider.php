@@ -1,37 +1,30 @@
-<?php namespace Anomaly\RelationshipFieldType;
+<?php
 
-use Anomaly\RelationshipFieldType\Handler\Related;
-use Anomaly\RelationshipFieldType\Table\LookupTableBuilder;
-use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
-use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
-use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
+namespace Anomaly\RelationshipFieldType;
+
 use Anomaly\Streams\Platform\Model\EloquentModel;
+use Anomaly\RelationshipFieldType\Handler\Related;
+use Illuminate\Contracts\Support\DeferrableProvider;
+use Anomaly\Streams\Platform\Addon\AddonServiceProvider;
+use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
+use Anomaly\RelationshipFieldType\Table\LookupTableBuilder;
+use Anomaly\Streams\Platform\Entry\Contract\EntryInterface;
 
 /**
  * Class RelationshipFieldTypeServiceProvider
  *
  * @link   http://pyrocms.com/
- * @author PyroCMS, Inc. <support@pyrocms.com>
  * @author Ryan Thompson <ryan@pyrocms.com>
  */
-class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
+class RelationshipFieldTypeServiceProvider extends AddonServiceProvider implements DeferrableProvider
 {
-
-    /**
-     * The singleton bindings.
-     *
-     * @var array
-     */
-    protected $singletons = [
-        RelationshipFieldTypeModifier::class => RelationshipFieldTypeModifier::class,
-    ];
 
     /**
      * The addon routes.
      *
      * @var array
      */
-    protected $routes = [
+    public $routes = [
         'streams/relationship-field_type/index/{key}'    => 'Anomaly\RelationshipFieldType\Http\Controller\LookupController@index',
         'streams/relationship-field_type/selected/{key}' => 'Anomaly\RelationshipFieldType\Http\Controller\LookupController@selected',
     ];
@@ -87,5 +80,13 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
                 return Related::class;
             }
         );
+    }
+
+    /**
+     * Return the provided services.
+     */
+    public function provides()
+    {
+        return [RelationshipFieldType::class, 'anomaly.field_type.relationship'];
     }
 }
