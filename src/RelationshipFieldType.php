@@ -1,4 +1,6 @@
-<?php namespace Anomaly\RelationshipFieldType;
+<?php
+
+namespace Anomaly\RelationshipFieldType;
 
 use Anomaly\RelationshipFieldType\Command\BuildOptions;
 use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
@@ -46,7 +48,7 @@ class RelationshipFieldType extends FieldType
      *
      * @var string
      */
-    protected $filterView = 'anomaly.field_type.relationship::filter';
+    //protected $filterView = 'anomaly.field_type.relationship::filter';
 
     /**
      * The pre-defined handlers.
@@ -102,7 +104,7 @@ class RelationshipFieldType extends FieldType
         cache(
             [
                 'anomaly/relationship-field_type::' . ($key = md5(json_encode($this->getConfig()))) =>
-                    $this->getConfig(),
+                $this->getConfig(),
             ],
             30
         );
