@@ -1,4 +1,4 @@
-(function (window, document) {
+(function () {
 
     let fields = Array.prototype.slice.call(
         document.querySelectorAll('select[data-provides="anomaly.field_type.relationship"][data-type="search"]')
@@ -9,4 +9,4 @@
             shouldSort: false,
         });
     });
-})(window, document);
+});
