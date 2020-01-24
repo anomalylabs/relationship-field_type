@@ -12,6 +12,7 @@ use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Support\Facades\Crypt;
 
 /**
  * Class RelationshipFieldType
@@ -131,13 +132,7 @@ class RelationshipFieldType extends FieldType
      */
     public function key()
     {
-        $this->cache->put(
-            'anomaly/relationship-field_type::' . ($key = md5(json_encode($this->getConfig()))),
-            $this->getConfig(),
-            30
-        );
-
-        return $key;
+       return Crypt::encrypt($this->getConfig());
     }
 
     /**

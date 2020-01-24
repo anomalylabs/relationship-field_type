@@ -2,6 +2,7 @@
 
 use Anomaly\Streams\Platform\Support\Collection;
 use Illuminate\Contracts\Cache\Repository;
+use Illuminate\Support\Facades\Crypt;
 
 class GetConfiguration
 {
@@ -31,8 +32,8 @@ class GetConfiguration
      */
     public function handle(Repository $cache)
     {
-        return new Collection(
-            array_merge($cache->get('anomaly/relationship-field_type::' . $this->key), ['key' => $this->key])
+       return new Collection(
+            array_merge(Crypt::decrypt($this->key), ['key' => $this->key])
         );
     }
 }
