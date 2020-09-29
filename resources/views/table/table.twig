@@ -1,6 +1,6 @@
 {{ asset_add("scripts.js", "streams::js/table/jquery-sortable.js") }}
 
-{% if not table.rows.empty() %}
+{% if not table.rows.isEmpty() %}
     {% block panel %}
         <div class="{{ table.options.panel_class }} panel-table">
 
