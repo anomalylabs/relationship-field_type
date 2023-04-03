@@ -36,7 +36,7 @@ class RelationshipFieldTypeModifier extends FieldTypeModifier
     {
         if ($value instanceof EloquentModel) {
 
-            $this->dispatch(new SetRelation($this->fieldType, $value));
+            $this->dispatchSync(new SetRelation($this->fieldType, $value));
 
             return $value->getId();
         }

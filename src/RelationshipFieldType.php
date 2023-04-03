@@ -40,7 +40,7 @@ class RelationshipFieldType extends FieldType
      * @var null|string
      */
     protected $inputView = null;
-    
+
     /**
      * The input class.
      *
@@ -197,7 +197,7 @@ class RelationshipFieldType extends FieldType
         if (strpos($model, '.')) {
 
             /* @var StreamInterface $stream */
-            $stream = $this->dispatch(new GetStream($model));
+            $stream = $this->dispatchSync(new GetStream($model));
 
             return $stream->getEntryModel();
         }
@@ -213,7 +213,7 @@ class RelationshipFieldType extends FieldType
     public function getOptions()
     {
         if ($this->options === null) {
-            $this->dispatch(new BuildOptions($this));
+            $this->dispatchSync(new BuildOptions($this));
         }
 
         return $this->options;
@@ -269,7 +269,7 @@ class RelationshipFieldType extends FieldType
 
         return 'anomaly.field_type.relationship::' . $this->config('mode');
     }
-    
+
     /**
      * Get the class.
      *
