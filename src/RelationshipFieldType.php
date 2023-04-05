@@ -11,7 +11,6 @@ use Anomaly\Streams\Platform\Stream\Contract\StreamInterface;
 use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Support\Facades\Crypt;
 
 /**
@@ -24,9 +23,6 @@ use Illuminate\Support\Facades\Crypt;
  */
 class RelationshipFieldType extends FieldType
 {
-
-    use DispatchesJobs;
-
     /**
      * The underlying database column type
      *
@@ -197,7 +193,7 @@ class RelationshipFieldType extends FieldType
         if (strpos($model, '.')) {
 
             /* @var StreamInterface $stream */
-            $stream = $this->dispatchSync(new GetStream($model));
+            $stream = dispatch_sync(new GetStream($model));
 
             return $stream->getEntryModel();
         }
@@ -213,7 +209,7 @@ class RelationshipFieldType extends FieldType
     public function getOptions()
     {
         if ($this->options === null) {
-            $this->dispatchSync(new BuildOptions($this));
+            dispatch_sync(new BuildOptions($this));
         }
 
         return $this->options;

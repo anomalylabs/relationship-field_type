@@ -30,7 +30,7 @@ class LookupController extends AdminController
     public function index(Container $container, $key)
     {
         /* @var Collection $config */
-        $config = $this->dispatchSync(new GetConfiguration($key));
+        $config = dispatch_sync(new GetConfiguration($key));
 
         $related = $container->make($config->get('related'));
 
@@ -57,7 +57,7 @@ class LookupController extends AdminController
     public function selected(Container $container, $key)
     {
         /* @var Collection $config */
-        $config = $this->dispatchSync(new GetConfiguration($key));
+        $config = dispatch_sync(new GetConfiguration($key));
 
         $related = $container->make($config->get('related'));
 
