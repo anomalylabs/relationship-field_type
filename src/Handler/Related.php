@@ -31,10 +31,14 @@ class Related
         $keyName   = $fieldType->config('key_name', $model->getKeyName()) ?: $model->getKeyName();
 
         /**
-         * A hidden attribute must never be used as the
-         * visible option label - fall back to the title.
+         * The label is a column name or a {field} pattern. A hidden
+         * attribute and a full Twig expression (which would reach any
+         * attribute through the presenter) are both refused - fall
+         * back to the title.
          */
-        if (in_array($titleName, $model->getHidden(), true)) {
+        if (in_array($titleName, $model->getHidden(), true)
+            || preg_match('/\{\{|\{%/', $titleName)
+        ) {
             $titleName = $model->getTitleName();
         }
 
