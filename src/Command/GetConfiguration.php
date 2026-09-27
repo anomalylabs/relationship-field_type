@@ -1,7 +1,6 @@
 <?php namespace Anomaly\RelationshipFieldType\Command;
 
 use Anomaly\Streams\Platform\Support\Collection;
-use Illuminate\Contracts\Cache\Repository;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
 
@@ -28,13 +27,12 @@ class GetConfiguration
     /**
      * Handle the command.
      *
-     * @param  Repository $cache
      * @return Collection
      */
-    public function handle(Repository $cache)
+    public function handle()
     {
         try {
-            $config = Crypt::decrypt($this->key);
+            $config = json_decode(Crypt::decrypt($this->key, false), true);
         } catch (DecryptException $exception) {
             abort(404);
         }

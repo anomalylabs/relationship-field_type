@@ -129,13 +129,16 @@ class RelationshipFieldType extends FieldType
     public function key()
     {
         return Crypt::encrypt(
-            array_merge(
-                $this->getConfig(),
-                [
-                    'user'    => auth()->id(),
-                    'expires' => time() + 60 * 60 * 24,
-                ]
-            )
+            json_encode(
+                array_merge(
+                    $this->getConfig(),
+                    [
+                        'user'    => auth()->id(),
+                        'expires' => time() + 60 * 60 * 24,
+                    ]
+                )
+            ),
+            false
         );
     }
 

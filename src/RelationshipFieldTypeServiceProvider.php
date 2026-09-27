@@ -35,8 +35,14 @@ class RelationshipFieldTypeServiceProvider extends AddonServiceProvider
      * @var array
      */
     protected $routes = [
-        'streams/relationship-field_type/index/{key}'    => 'Anomaly\RelationshipFieldType\Http\Controller\LookupController@index',
-        'streams/relationship-field_type/selected/{key}' => 'Anomaly\RelationshipFieldType\Http\Controller\LookupController@selected'
+        'streams/relationship-field_type/index/{key}'    => [
+            'verb' => 'get',
+            'uses' => 'Anomaly\RelationshipFieldType\Http\Controller\LookupController@index',
+        ],
+        'streams/relationship-field_type/selected/{key}' => [
+            'verb' => 'get',
+            'uses' => 'Anomaly\RelationshipFieldType\Http\Controller\LookupController@selected',
+        ],
     ];
 
     /**
