@@ -30,6 +30,14 @@ class Related
         $titleName = $fieldType->config('title_name', $model->getTitleName()) ?: $model->getTitleName();
         $keyName   = $fieldType->config('key_name', $model->getKeyName()) ?: $model->getKeyName();
 
+        /**
+         * A hidden attribute must never be used as the
+         * visible option label - fall back to the title.
+         */
+        if (in_array($titleName, $model->getHidden(), true)) {
+            $titleName = $model->getTitleName();
+        }
+
         try {
 
             /**
