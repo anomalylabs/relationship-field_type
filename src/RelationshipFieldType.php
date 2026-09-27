@@ -154,7 +154,7 @@ class RelationshipFieldType extends FieldType
         }
 
         if ($table = $this->config('value_table')) {
-            $table = $this->container->make($table);
+            $table = $this->makeTable($table, ValueTableBuilder::class);
         } else {
             $table = $related->newRelationshipFieldTypeValueTableBuilder();
         }
@@ -198,15 +198,46 @@ class RelationshipFieldType extends FieldType
     {
         $model = $this->config('related');
 
-        if (strpos($model, '.')) {
+        if (is_string($model) && strpos($model, '.')) {
 
             /* @var StreamInterface $stream */
-            $stream = dispatch_sync(new GetStream($model));
+            if ($stream = dispatch_sync(new GetStream($model))) {
+                return $stream->getEntryModel();
+            }
+        }
 
-            return $stream->getEntryModel();
+        /*
+         * Check the class before making it. Anything the
+         * container can build would otherwise be constructed
+         * before it could be rejected.
+         */
+        if (!is_string($model) || !is_subclass_of($model, EloquentModel::class)) {
+            throw new \Exception(
+                "The [related] configuration of field [{$this->getField()}] must name a model "
+                . "or a stream."
+            );
         }
 
         return $this->container->make($model);
+    }
+
+    /**
+     * Make a configured table builder.
+     *
+     * @param  string $table
+     * @param  string $type
+     * @return mixed
+     * @throws \Exception
+     */
+    public function makeTable($table, $type)
+    {
+        if (!is_string($table) || !is_a($table, $type, true)) {
+            throw new \Exception(
+                "The table configured for field [{$this->getField()}] must extend [{$type}]."
+            );
+        }
+
+        return $this->container->make($table);
     }
 
     /**

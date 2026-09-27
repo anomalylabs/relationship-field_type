@@ -2,12 +2,12 @@
 
 use Anomaly\RelationshipFieldType\Command\GetConfiguration;
 use Anomaly\RelationshipFieldType\Command\HydrateValueTable;
+use Anomaly\RelationshipFieldType\RelationshipFieldType;
 use Anomaly\RelationshipFieldType\Table\LookupTableBuilder;
 use Anomaly\RelationshipFieldType\Table\ValueTableBuilder;
 use Anomaly\Streams\Platform\Http\Controller\AdminController;
 use Anomaly\Streams\Platform\Support\Collection;
 use Illuminate\Contracts\Cache\Repository;
-use Illuminate\Contracts\Container\Container;
 
 /**
  * Class LookupController
@@ -23,19 +23,21 @@ class LookupController extends AdminController
     /**
      * Return an index of entries from related stream.
      *
-     * @param Container $container
-     * @param           $key
+     * @param RelationshipFieldType $fieldType
+     * @param                       $key
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function index(Container $container, $key)
+    public function index(RelationshipFieldType $fieldType, $key)
     {
         /* @var Collection $config */
         $config = dispatch_sync(new GetConfiguration($key));
 
-        $related = $container->make($config->get('related'));
+        $fieldType->mergeConfig($config->all());
+
+        $related = $fieldType->getRelatedModel();
 
         if ($table = $config->get('lookup_table')) {
-            $table = $container->make($table);
+            $table = $fieldType->makeTable($table, LookupTableBuilder::class);
         } else {
             $table = $related->newRelationshipFieldTypeLookupTableBuilder();
         }
@@ -50,19 +52,21 @@ class LookupController extends AdminController
     /**
      * Return the selected entries.
      *
-     * @param Container $container
-     * @param           $key
+     * @param RelationshipFieldType $fieldType
+     * @param                       $key
      * @return null|string
      */
-    public function selected(Container $container, $key)
+    public function selected(RelationshipFieldType $fieldType, $key)
     {
         /* @var Collection $config */
         $config = dispatch_sync(new GetConfiguration($key));
 
-        $related = $container->make($config->get('related'));
+        $fieldType->mergeConfig($config->all());
+
+        $related = $fieldType->getRelatedModel();
 
         if ($table = $config->get('value_table')) {
-            $table = $container->make($table);
+            $table = $fieldType->makeTable($table, ValueTableBuilder::class);
         } else {
             $table = $related->newRelationshipFieldTypeValueTableBuilder();
         }
